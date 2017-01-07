@@ -1,0 +1,62 @@
+<fieldset class="form-group">
+  <div class="form-check">
+    <label class="form-check-label">
+        <input type="radio"
+         class="form-check-input"
+          name="optionsRadios"
+           id="optionsRadios1"
+            value="option1"
+             checked
+             (change)="selectionChanged(1,searchinput)">
+        Medecine Name
+      </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+        <input type="radio"
+         class="form-check-input"
+          name="optionsRadios"
+           id="optionsRadios2"
+            value="option2"
+            (change)="selectionChanged(2,searchinput)">
+        Barcode
+      </label>
+  </div>
+  <div class="form-check disabled">
+    <label class="form-check-label">
+        <input type="radio"
+         class="form-check-input"
+          name="optionsRadios"
+           id="optionsRadios3"
+            value="option3"
+            disabled
+            (change)="selectionChanged(3,searchinput)">
+        Effective Substance
+      </label>
+  </div>
+</fieldset>
+
+<div class="form-group">
+  <input type="text" class="form-control medecinesearch" id="searchinput" aria-describedby="search" placeholder="{{ placeholderString }}" value="" (keyup)="search(searchinput.value)" #searchinput>
+</div>
+
+<div class="sk-fading-circle spinner" [hidden]="!showSpinner">
+  <div class="sk-circle1 sk-circle"></div>
+  <div class="sk-circle2 sk-circle"></div>
+  <div class="sk-circle3 sk-circle"></div>
+  <div class="sk-circle4 sk-circle"></div>
+  <div class="sk-circle5 sk-circle"></div>
+  <div class="sk-circle6 sk-circle"></div>
+  <div class="sk-circle7 sk-circle"></div>
+  <div class="sk-circle8 sk-circle"></div>
+  <div class="sk-circle9 sk-circle"></div>
+  <div class="sk-circle10 sk-circle"></div>
+  <div class="sk-circle11 sk-circle"></div>
+  <div class="sk-circle12 sk-circle"></div>
+</div>
+
+<ul class="list-group search-list">
+  <li class="list-group-item search-list-item ripple" *ngFor="let medecine of medecineList" (click)="showDetails(medecine.id)">
+    <img src="{{ medecine.small_pic_url }}"> {{ (medecine.hasOwnProperty("name"))? medecine.name:medecine.$key }}
+  </li>
+</ul>
