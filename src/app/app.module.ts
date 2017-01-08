@@ -18,6 +18,10 @@ import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { appRoutes } from './app.routes';
 import { OrdersComponent } from './orders/orders.component';
+import { ShoppingCartWidgetComponent } from './shopping-cart/shopping-cart-widget/shopping-cart-widget.component';
+import { ShoppingListService } from './shopping-cart/shopping-list.service';
+import { ShoppingCartListComponent } from './shopping-cart/shopping-cart-list/shopping-cart-list.component';
+import { MultiplyPipe } from './multiply.pipe';
 
 
 @NgModule({
@@ -30,7 +34,10 @@ import { OrdersComponent } from './orders/orders.component';
     AuthenticationComponent,
     LoginComponent,
     SignupComponent,
-    OrdersComponent
+    OrdersComponent,
+    ShoppingCartWidgetComponent,
+    ShoppingCartListComponent,
+    MultiplyPipe
     ],
   imports: [
     BrowserModule,
@@ -39,7 +46,7 @@ import { OrdersComponent } from './orders/orders.component';
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [MedecineService, AuthenticationService],
+  providers: [MedecineService, AuthenticationService, ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

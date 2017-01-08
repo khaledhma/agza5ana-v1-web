@@ -1,4 +1,4 @@
-<div class="card" *ngIf="exist">
+<div class="medecine-details card" *ngIf="exist">
   <img class="card-img-top img-fluid" src="http://lorempixel.com/550/350/">
   <div class="card-block">
     <h4 class="card-title">{{medecineDetails?.name_med}}</h4>
@@ -14,6 +14,9 @@
     <li class="list-group-item">price:{{medecineDetails?.price}}</li>
   </ul>
   <div class="card-block text-xs-center">
-    <a class="btn-solid-accent ripple">Add to shopping list</a>
+    <button class="btn-solid-accent ripple" [disabled]="!loggedin" (click)="addItem()">Add to shopping list</button>
+    <div class="alert alert-info" role="alert" *ngIf="!loggedin">
+      <strong>Please</strong> Signup or Login to enable the ordering service
+    </div>
   </div>
 </div>
