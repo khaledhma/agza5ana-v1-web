@@ -1,0 +1,83 @@
+<div class="col-md-6">
+  <div class="list-group card">
+    <a class="list-group-item shopping-list-item" *ngFor="let item of shoppingList">
+      <div class="shopping-list-item-info">
+        <h5>{{item.medecineName}}</h5>
+        <small>price: {{item.medecinePrice}}LE</small>
+      </div>
+      <p>{{ item.medecineQty }} </p>
+      <div class="shopping-list-item-total">
+        <h5>{{item.medecinePrice | multiply:item.medecineQty | number:'1.2-2'}} LE</h5>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="list-group card">
+    <a class="list-group-item shopping-list-item">
+      <button class="btn-solid-accent ripple float-xs-right" (click)="sendOrder()">Send Order</button>
+    </a>
+    <a class="list-group-item shopping-list-item" *ngFor="let address of addresses, let i=index">
+      <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio"
+             class="form-check-input"
+              name="optionsRadios"
+               id="optionsRadios1"
+                value="option1"
+                 [checked] = "index==0">
+            {{address.name}}
+          </label>
+      </div>
+      <div class="shopping-list-item-info">
+        <small>{{address.details}}</small>
+      </div>
+    </a>
+    <a class="list-group-item shopping-list-item">
+      <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio"
+             class="form-check-input"
+              name="optionsRadios"
+               id="optionsRadios1"
+                value="option1">
+                 <input type="email"
+                        class="form-control"
+                        id="name"
+                        aria-describedby="addressNameHelp"
+                        placeholder="Enter address name"
+                        ngModel
+                        name="name"
+                        required
+                 >
+          </label>
+      </div>
+      <form #f="ngForm">
+        <div class="form-group">
+          <label for="email">Apartment Number</label>
+          <input type="email"
+                 class="form-control"
+                 id="apartment"
+                 aria-describedby="apartmentHelp"
+                 placeholder="Apartment Number"
+                 ngModel
+                 name="apartment"
+                 required
+          >
+        </div>
+        <div class="form-group">
+          <label for="email">Building Number</label>
+          <input type="email"
+                 class="form-control"
+                 id="building"
+                 aria-describedby="buildingtHelp"
+                 placeholder="Building Number"
+                 ngModel
+                 name="building"
+                 required
+          >
+        </div>
+      </form>
+    </a>
+  </div>
+</div>

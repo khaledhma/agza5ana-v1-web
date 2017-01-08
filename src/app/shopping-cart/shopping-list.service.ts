@@ -6,6 +6,7 @@ import { ShoppingItem } from './shopping-item';
 export class ShoppingListService {
 
   private shoppingList: ShoppingItem[];
+  private shoppingListFinal: ShoppingItem[];
   public ItemsCount = new EventEmitter <number>();
 
   constructor() {
@@ -53,5 +54,13 @@ export class ShoppingListService {
     this.getItemsCount();
     this.shoppingList = [];
   };
+
+  storeFinalList(finalList:ShoppingItem[]) {
+    this.shoppingListFinal = finalList;
+  }
+
+  getFinalList():ShoppingItem[] {
+    return this.shoppingListFinal;
+  }
 
 }

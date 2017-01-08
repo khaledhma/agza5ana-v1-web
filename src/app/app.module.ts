@@ -22,6 +22,8 @@ import { ShoppingCartWidgetComponent } from './shopping-cart/shopping-cart-widge
 import { ShoppingListService } from './shopping-cart/shopping-list.service';
 import { ShoppingCartListComponent } from './shopping-cart/shopping-cart-list/shopping-cart-list.component';
 import { MultiplyPipe } from './multiply.pipe';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-checkout/shopping-cart-checkout.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { MultiplyPipe } from './multiply.pipe';
     OrdersComponent,
     ShoppingCartWidgetComponent,
     ShoppingCartListComponent,
-    MultiplyPipe
+    MultiplyPipe,
+    UserProfileComponent,
+    ShoppingCartCheckoutComponent
     ],
   imports: [
     BrowserModule,
