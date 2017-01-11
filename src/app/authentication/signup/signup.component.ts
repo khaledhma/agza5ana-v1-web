@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { AuthenticationService } from '../../authentication.service';
@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   private showSpinner: boolean = false;
   private errorMessage: string = "";
   private isError: boolean = false;
+  @Output() switchPanel = new EventEmitter<any>();
 
 
   constructor(private authService: AuthenticationService) { }
@@ -28,10 +29,12 @@ export class SignupComponent implements OnInit {
     let password = form.value.password;
     this.authService.signupUserWithEmailAndPassword (name, email, password).then(
       (data)=>{
+        this.authService.updateProfile(name,data).then();
         this.showSpinner = false;
         this.errorMessage = "";
         this.isError = false;
-        this.close(form);
+        this.authService.signout();
+        this.switchPanel.emit();
       }
     ).catch(
       (error)=>{

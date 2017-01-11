@@ -1,5 +1,8 @@
 <div class="col-md-6">
-  <div class="list-group card">
+  <div class="card" *ngIf="shoppingList.length==0">
+    No items in the shopping list.....
+  </div>
+  <div class="list-group card"  [hidden]="shoppingList.length==0">
     <a class="list-group-item shopping-list-item" *ngFor="let item of shoppingList">
       <div class="shopping-list-item-info">
         <h5>{{item.medecineName}}</h5>
@@ -13,7 +16,7 @@
   </div>
 </div>
 <div class="col-md-6">
-  <div class="list-group card">
+  <div class="list-group card" [hidden]="shoppingList.length==0">
     <a class="list-group-item shopping-list-item">
       <button class="btn-solid-accent ripple float-xs-right" (click)="sendOrder()">Send Order</button>
     </a>

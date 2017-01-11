@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ShoppingListService } from '../shopping-list.service';
+import { AuthenticationService } from '../../authentication.service';
 import { ShoppingItem } from '../shopping-item';
 
 
@@ -13,27 +14,36 @@ import { ShoppingItem } from '../shopping-item';
 export class ShoppingCartListComponent implements OnInit {
 
   private shoppingList: ShoppingItem[] = [];
+  private user: any;
 
-  constructor(private shoppingListService: ShoppingListService, private router: Router) { }
+  constructor(private shoppingListService: ShoppingListService, private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.shoppingList = this.shoppingListService.getList();
+    this.authService.isAuthenticated().subscribe(
+      (user) => {
+        if (user) {
+          this.shoppingList = this.shoppingListService.getList(user.uid);
+          this.user = user;
+        } else {
+          this.router.navigate(['/']);
+        }
+      }
+    )
   }
 
   removeItem(item) {
-    this.shoppingListService.removeItem(item);
+    this.shoppingListService.removeItem(item,this.user['uid']);
   }
 
   decrement(item) {
-    this.shoppingListService.decrementItem(item);
+    this.shoppingListService.decrementItem(item,this.user['uid']);
   }
 
   increment(item) {
-    this.shoppingListService.incrementItem(item);
+    this.shoppingListService.incrementItem(item,this.user['uid']);
   }
 
   checkout(){
-    this.shoppingListService.storeFinalList(this.shoppingList);
     this.router.navigate(['shoppinglist','checkout']);
   }
 

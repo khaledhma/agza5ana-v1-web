@@ -25,6 +25,12 @@ export class AuthenticationService {
 
   }
 
+  updateProfile (name: string, auth: FirebaseAuthState): firebase.Promise<any> {
+
+      return auth.auth.updateProfile({ 'displayName':name, 'photoURL': '' });
+
+  }
+
   signout () {
     this.af.auth.logout();
   }

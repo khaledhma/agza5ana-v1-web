@@ -5,7 +5,7 @@
   </a>
   <ul class="nav navbar-nav" *ngIf="loggedin">
     <li class="nav-item dropdown float-xs-right" (click)="toggle(dropdownMenu)" (mouseleave)="close(dropdownMenu)" #dropdownMenu>
-      <a class="nav-link dropdown-toggle" id="supportedContentDropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
+      <a class="nav-link dropdown-toggle" id="supportedContentDropdown" aria-haspopup="true" aria-expanded="false">{{ userName | slice:0:15 }}</a>
       <div class="dropdown-menu dropdown-menu-right shift-menu-up" aria-labelledby="supportedContentDropdown">
         <a class="dropdown-item" [routerLink]="['userprofile']">Profile</a>
         <a class="dropdown-item" [routerLink]="['orders']">My Orders</a>
@@ -13,5 +13,5 @@
       </div>
     </li>
   </ul>
-  <a class="btn-outline-dark float-xs-right ripple" (click)="showLogin()" *ngIf="!loggedin">Log In</a>
+  <a class="btn-outline-dark float-xs-right ripple" (click)="showLogin()" *ngIf="!(loggedin)">Log In</a>
 </nav>

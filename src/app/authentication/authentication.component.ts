@@ -41,4 +41,10 @@ export class AuthenticationComponent implements OnInit {
 
   }
 
+
+  switchToLogin() {
+    this.showLogin=true;
+  }
+
+
 }

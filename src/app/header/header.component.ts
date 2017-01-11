@@ -7,16 +7,26 @@ import { Subscription } from 'rxjs/Rx';
   templateUrl: './header.component.html',
   styles: []
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private isOpen: boolean = false;
   private subscription: Subscription;
   private loggedin: boolean = false;
+  private userName: string;
 
   constructor(private renderer: Renderer, private authService:AuthenticationService) { }
 
   ngOnInit() {
     this.subscription = this.authService.isAuthenticated().subscribe(
-      (data)=>this.loggedin=data?true:false,
+      (data)=>
+      {
+        this.loggedin=data?true:false;
+        if (data) {
+          this.userName = data.auth.displayName;
+        } else {
+          this.userName = "";
+        }
+
+      }
     )
   }
 

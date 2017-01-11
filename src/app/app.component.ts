@@ -10,4 +10,5 @@ import { ShoppingListService } from './shopping-cart/shopping-list.service';
 export class AppComponent {
   constructor () {}
 
+
 }

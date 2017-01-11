@@ -19,6 +19,7 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() exist: boolean = false;
   private subscription: Subscription;
   private loggedin: boolean = false;
+  private user: any;
 
 
 
@@ -39,7 +40,10 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(){
     this.subscription = this.authService.isAuthenticated().subscribe(
-      (data)=>this.loggedin=data?true:false,
+      (user)=> {
+        this.loggedin=user?true:false;
+        this.user = user;
+      }
     )
   }
 
@@ -53,7 +57,7 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
                                                +this.medecineDetails.price,
                                                +1,
                                                "http://lorempixel.com/550/350/");
-    this.shoppingListService.addItem(item);
+    this.shoppingListService.addItem(item, this.user['uid']);
   }
 
 }

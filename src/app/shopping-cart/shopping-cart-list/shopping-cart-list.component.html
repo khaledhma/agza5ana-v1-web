@@ -1,10 +1,13 @@
 <div class="col-lg-12">
+  <div class="card" *ngIf="shoppingList.length==0">
+    No items in the shopping list.....
+  </div>
   <div class="list-group card" [hidden]="shoppingList.length==0">
     <a class="list-group-item shopping-list-item">
       <button class="btn-solid-accent ripple float-xs-right" (click)="checkout()">CHECK OUT...</button>
     </a>
     <a class="list-group-item shopping-list-item" *ngFor="let item of shoppingList">
-      <a class="btn btn-danger btn-delete" (click)="removeItem(item)">X</a>
+      <a class="btn btn-delete" (click)="removeItem(item)">X</a>
       <div class="shopping-list-item-info">
         <h5>{{item.medecineName}}</h5>
         <small>price: {{item.medecinePrice}}LE</small>

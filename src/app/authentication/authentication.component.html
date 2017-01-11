@@ -12,7 +12,7 @@
         </ul>
       </div>
       <app-login *ngIf="showLogin"></app-login>
-      <app-signup *ngIf="!showLogin"></app-signup>
+      <app-signup *ngIf="!showLogin" (switchPanel)="switchToLogin()"></app-signup>
     </div>
     <!-- /.modal-content -->
   </div>
