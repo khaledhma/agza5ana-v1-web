@@ -43,8 +43,16 @@ export class ShoppingCartListComponent implements OnInit {
     this.shoppingListService.incrementItem(item,this.user['uid']);
   }
 
-  checkout(){
+  checkout() {
     this.router.navigate(['shoppinglist','checkout']);
+  }
+
+  getTotal(): number {
+    let total = 0;
+    for(let i=0; i<this.shoppingListService.getCurrentItemsCount(); i++) {
+      total = total + this.shoppingList[i]['medecineQty']*this.shoppingList[i]['medecinePrice'];
+    }
+    return total;
   }
 
 

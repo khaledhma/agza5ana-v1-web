@@ -1,22 +1,20 @@
 <div class="medecine-details card" *ngIf="exist">
-  <img class="card-img-top img-fluid" src="http://lorempixel.com/550/350/">
-  <div class="card-block">
-    <h4 class="card-title">{{medecineDetails?.name_med}}</h4>
-    <p class="card-text">This medecine is good for you. Please take it. Take it. Take it. Take it. Take it. Take it. Take it. Take it.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">abbreviation:{{medecineDetails?.abbreviation}}</li>
-    <li class="list-group-item">dos_eng:{{medecineDetails?.dos_eng}}</li>
-    <li class="list-group-item">form:{{medecineDetails?.form}}</li>
-    <li class="list-group-item">item_no:{{medecineDetails?.item_no}}</li>
-    <li class="list-group-item">name:{{medecineDetails?.name}}</li>
-    <li class="list-group-item">name_med:{{medecineDetails?.name_med}}</li>
-    <li class="list-group-item">price:{{medecineDetails?.price}}</li>
-  </ul>
-  <div class="card-block text-xs-center">
-    <button class="btn-solid-accent ripple" [disabled]="!loggedin" (click)="addItem()">Add to shopping list</button>
-    <div class="alert alert-info" role="alert" *ngIf="!loggedin">
-      <strong>Please</strong> Signup or Login to enable the ordering service
+  <div class="medecine-details-image">
+    <img class="card-img-left img-fluid" src="http://lorempixel.com/650/350/">
+    <div class="image-overlay">
+      <h4>{{medecineDetails?.name_med}}</h4>
+      <h4>{{medecineDetails?.price}} LE</h4>
     </div>
+    <button class="btn-solid-accent ripple" [disabled]="!loggedin" (click)="addItem()">Order</button>
+  </div>
+  <div class="medecine-details-content">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">abbreviation:{{medecineDetails?.abbreviation}}</li>
+      <li class="list-group-item">dos_eng:{{medecineDetails?.dos_eng}}</li>
+      <li class="list-group-item">form:{{medecineDetails?.form}}</li>
+      <li class="list-group-item">item_no:{{medecineDetails?.item_no}}</li>
+      <li class="list-group-item">name:{{medecineDetails?.name}}</li>
+      <li class="list-group-item">name_med:{{medecineDetails?.name_med}}</li>
+    </ul>
   </div>
 </div>

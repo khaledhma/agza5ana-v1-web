@@ -24,7 +24,8 @@ import { ShoppingCartListComponent } from './shopping-cart/shopping-cart-list/sh
 import { MultiplyPipe } from './multiply.pipe';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-checkout/shopping-cart-checkout.component';
-
+import { UserService } from './user.service';
+import { FormatAddressPipe } from './format-address.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-che
     ShoppingCartListComponent,
     MultiplyPipe,
     UserProfileComponent,
-    ShoppingCartCheckoutComponent
+    ShoppingCartCheckoutComponent,
+    FormatAddressPipe
     ],
   imports: [
     BrowserModule,
@@ -50,7 +52,7 @@ import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-che
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [MedecineService, AuthenticationService, ShoppingListService],
+  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

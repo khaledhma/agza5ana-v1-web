@@ -1,86 +1,54 @@
 <div class="col-md-6">
   <div class="card" *ngIf="shoppingList.length==0">
-    No items in the shopping list.....
+    <h4>No items in the shopping list.....</h4>
   </div>
-  <div class="list-group card"  [hidden]="shoppingList.length==0">
+  <div class="list-group card" [hidden]="shoppingList.length==0">
+    <a class="list-group-item shopping-list-header">
+      <p> </p>
+      <h5><small>Total</small> {{getTotal() | number:'1.2-2'}} LE</h5>
+    </a>
     <a class="list-group-item shopping-list-item" *ngFor="let item of shoppingList">
-      <div class="shopping-list-item-info">
-        <h5>{{item.medecineName}}</h5>
-        <small>price: {{item.medecinePrice}}LE</small>
+      <div class="shopping-list-item-control">
+        <div class="shopping-list-item-info">
+          <h5>{{item.medecineName}} <small>(Qty. {{ item.medecineQty }})</small></h5>
+          <small>price: {{item.medecinePrice}}LE</small>
+        </div>
       </div>
-      <p>{{ item.medecineQty }} </p>
       <div class="shopping-list-item-total">
-        <h5>{{item.medecinePrice | multiply:item.medecineQty | number:'1.2-2'}} LE</h5>
+        <h5><small>Sub-Total</small> {{item.medecinePrice | multiply:item.medecineQty | number:'1.2-2'}} LE</h5>
       </div>
     </a>
   </div>
 </div>
 <div class="col-md-6">
+  <form #f="ngForm">
   <div class="list-group card" [hidden]="shoppingList.length==0">
-    <a class="list-group-item shopping-list-item">
-      <button class="btn-solid-accent ripple float-xs-right" (click)="sendOrder()">Send Order</button>
+    <a class="list-group-item adress-list-header">
+      <p> </p>
+      <button class="btn-solid-accent ripple" (click)="sendOrder(f)" [disabled]="(addressSelected==addresses.length?true:false)&&(f.invalid)">Send Order</button>
     </a>
-    <a class="list-group-item shopping-list-item" *ngFor="let address of addresses, let i=index">
+    <a class="list-group-item adress-list-saved" *ngFor="let address of addresses, let i=index">
       <div class="form-check">
-        <label class="form-check-label">
-            <input type="radio"
-             class="form-check-input"
-              name="optionsRadios"
-               id="optionsRadios1"
-                value="option1"
-                 [checked] = "index==0">
-            {{address.name}}
+        <label class="form-check-label" for="addressName">
+            <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="i"  [(ngModel)]="addressSelected">
+            <b>{{address.name}}</b>
           </label>
       </div>
-      <div class="shopping-list-item-info">
-        <small>{{address.details}}</small>
-      </div>
+      <small>{{address.details}}</small>
     </a>
-    <a class="list-group-item shopping-list-item">
-      <div class="form-check">
-        <label class="form-check-label">
-            <input type="radio"
-             class="form-check-input"
-              name="optionsRadios"
-               id="optionsRadios1"
-                value="option1">
-                 <input type="email"
-                        class="form-control"
-                        id="name"
-                        aria-describedby="addressNameHelp"
-                        placeholder="Enter address name"
-                        ngModel
-                        name="name"
-                        required
-                 >
+    <a class="list-group-item add-new-address">
+      <div class="form-check address-name">
+        <label class="form-check-label" for="addressName">
+            <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="addresses.length" [(ngModel)]="addressSelected">
+            <input type="text" class="form-control" id="name" placeholder="Enter address name" ngModel name="name" required>
           </label>
       </div>
-      <form #f="ngForm">
-        <div class="form-group">
-          <label for="email">Apartment Number</label>
-          <input type="email"
-                 class="form-control"
-                 id="apartment"
-                 aria-describedby="apartmentHelp"
-                 placeholder="Apartment Number"
-                 ngModel
-                 name="apartment"
-                 required
-          >
-        </div>
-        <div class="form-group">
-          <label for="email">Building Number</label>
-          <input type="email"
-                 class="form-control"
-                 id="building"
-                 aria-describedby="buildingtHelp"
-                 placeholder="Building Number"
-                 ngModel
-                 name="building"
-                 required
-          >
-        </div>
-      </form>
+      <input type="text" class="form-control" id="apartment" placeholder="Apartment number" ngModel name="apartment" required>
+      <input type="text" class="form-control" id="building" placeholder="Building number" ngModel name="building" required>
+      <input type="text" class="form-control" id="street" placeholder="Street name" ngModel name="street" required>
+      <input type="text" class="form-control" id="area" placeholder="Area" ngModel name="area" required>
+      <input type="text" class="form-control" id="city" placeholder="City" ngModel name="city" required>
     </a>
   </div>
+</form>
 </div>
