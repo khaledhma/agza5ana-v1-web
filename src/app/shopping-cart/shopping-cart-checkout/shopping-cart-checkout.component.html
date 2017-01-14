@@ -34,20 +34,23 @@
             <b>{{address.name}}</b>
           </label>
       </div>
-      <small>{{address.details}}</small>
+      <h6>{{ address | formatAddress }}</h6>
+    </a>
+    <a class="list-group-item adress-list-saved" *ngIf="isAddress">
+      <p>No Saved Adresses. Please use the form to add new address</p>
     </a>
     <a class="list-group-item add-new-address">
       <div class="form-check address-name">
         <label class="form-check-label" for="addressName">
             <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="addresses.length" [(ngModel)]="addressSelected">
-            <input type="text" class="form-control" id="name" placeholder="Enter address name" ngModel name="name" required>
+            <input type="text" class="form-control" id="name" placeholder="Enter address name" ngModel name="name" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
           </label>
       </div>
-      <input type="text" class="form-control" id="apartment" placeholder="Apartment number" ngModel name="apartment" required>
-      <input type="text" class="form-control" id="building" placeholder="Building number" ngModel name="building" required>
-      <input type="text" class="form-control" id="street" placeholder="Street name" ngModel name="street" required>
-      <input type="text" class="form-control" id="area" placeholder="Area" ngModel name="area" required>
-      <input type="text" class="form-control" id="city" placeholder="City" ngModel name="city" required>
+      <input type="text" class="form-control" id="apartment" placeholder="Apartment number" ngModel name="apartment" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+      <input type="text" class="form-control" id="building" placeholder="Building number" ngModel name="building" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+      <input type="text" class="form-control" id="street" placeholder="Street name" ngModel name="street" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+      <input type="text" class="form-control" id="area" placeholder="Area" ngModel name="area" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+      <input type="text" class="form-control" id="city" placeholder="City" ngModel name="city" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
     </a>
   </div>
 </form>

@@ -26,6 +26,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-checkout/shopping-cart-checkout.component';
 import { UserService } from './user.service';
 import { FormatAddressPipe } from './format-address.pipe';
+import { OrderService } from './order.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { FormatAddressPipe } from './format-address.pipe';
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService],
+  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

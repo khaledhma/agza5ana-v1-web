@@ -5,6 +5,11 @@ import { NgForm } from '@angular/forms';
 import { ShoppingItem } from '../shopping-item';
 import { ShoppingListService } from '../shopping-list.service';
 import { AuthenticationService } from '../../authentication.service';
+import { UserService } from '../../user.service';
+import { User } from '../../user';
+import { Address } from '../../address';
+import { Order } from '../../order';
+import { OrderService } from '../../order.service';
 
 
 @Component({
@@ -14,14 +19,19 @@ import { AuthenticationService } from '../../authentication.service';
 })
 export class ShoppingCartCheckoutComponent implements OnInit {
 
-  private addresses: any[] = [{ 'name': 'work', 'details': '128, nasr city, cairo' },
-    { 'name': 'home 1', 'details': '3, sheraton, cairo' }];
-
   private shoppingList: ShoppingItem[] = [];
   private user: any;
   private addressSelected: number = 0;
+  private userInfo: User;
+  private isAddress: boolean = true;
+  private addresses: Address[] = [];
+  private addressesKeys: string[];
 
-  constructor(private router: Router, private shoppingListService: ShoppingListService, private authService: AuthenticationService) { }
+  constructor(private router: Router,
+               private shoppingListService: ShoppingListService,
+               private authService: AuthenticationService,
+               private userService: UserService,
+               private orderService: OrderService) { }
 
   ngOnInit() {
     this.authService.isAuthenticated().subscribe(
@@ -29,11 +39,42 @@ export class ShoppingCartCheckoutComponent implements OnInit {
         if (user) {
           this.shoppingList = this.shoppingListService.getList(user.uid);
           this.user = user;
+          this.getuserInfo(user.uid);
         } else {
           this.router.navigate(['/']);
         }
       }
     )
+  }
+
+  getuserInfo(uid: string) {
+    this.userService.getUserProfile(uid).subscribe(
+      (userData) => {
+        console.log(userData);
+        this.userInfo = new User(
+          userData.displayName,
+          userData.email,
+          userData.$key,
+          null,
+          userData.addresses ? userData.addresses : null
+        );
+        if (userData.addresses) {
+          this.addresses = Object.keys(userData.addresses).map(key=>userData.addresses[key]);
+          this.addressesKeys = Object.keys(userData.addresses);
+          if (this.addresses.length > 0) {
+            this.isAddress = false;
+          } else {
+            this.isAddress = true;
+          }
+        } else {
+          this.isAddress = true;
+          this.addresses = [];
+        }
+      },
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   getTotal(): number {
@@ -44,8 +85,33 @@ export class ShoppingCartCheckoutComponent implements OnInit {
     return total;
   }
 
+  saveAddress(f: NgForm) {
+    let formValue = f['value'];
+    if(formValue.hasOwnProperty('addressName')) {
+      formValue['addressName'] = null;
+    }
+    this.userService.addAddress(this.userInfo['uid'], Object.assign(formValue, { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
+      (data) => {
+        console.log(data);
+        this.getuserInfo(this.userInfo['uid']);
+        f.reset();
+      }
+    )
+  }
+
   sendOrder(f:NgForm) {
-    console.log(f);
+    if (this.addressSelected == this.addresses.length) {
+      this.saveAddress(f);
+    }
+    let order = new Order(this.user.uid, this.addresses[this.addressSelected], new Date().getTime() , undefined, undefined, undefined, this.shoppingList , this.getTotal());
+    console.log(order);
+    this.orderService.sendOrder(order).then(
+      (data)=>{
+        console.log(data);
+        this.shoppingListService.deleteList(this.user.uid);
+        this .router.navigate(['orders']);
+      }
+    )
   }
 
 }

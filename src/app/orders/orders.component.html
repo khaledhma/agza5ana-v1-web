@@ -1,3 +1,39 @@
-<p>
-  orders works!
-</p>
+<div class="col-lg-12">
+  <div class="orders-container">
+    <div class="card order-card" *ngFor="let order of orderList">
+      <ul class="list-group order-content-list">
+        <li class="list-group-item header" [ngClass]="{'pending': (order.orderStatus=='pending')?true:false,'accepted': (order.orderStatus=='accepted')?true:false}">
+          <i class="material-icons" *ngIf="(order.orderStatus=='accepted')?true:false">done</i>&nbsp;&nbsp;{{ order.orderStatus | uppercase }}
+          <h5><small>Total</small>&nbsp;&nbsp;{{ order.orderTotal }}</h5>
+        </li>
+        <li class="list-group-item">
+          Sent At:&nbsp;&nbsp; {{ order.orderTime}}
+        </li>
+        <li class="list-group-item">
+          Delivery To:&nbsp;&nbsp; {{ order.senderAddress | formatAddress }}
+        </li>
+        <li class="list-group-item">
+          Accepted By:&nbsp;&nbsp; {{ order.orderAcceptedBy!='none'?order.orderAcceptedBy:''}}
+        </li>
+        <li class="list-group-item show-more ripple" (click)="showDetails()">
+          SHOW DETAILS&nbsp;&nbsp;<i class="material-icons">arrow_drop_down</i>
+        </li>
+        <li class="list-group-item">
+          <div class="list-group collapse">
+            <li class="list-group-item shopping-list-item" *ngFor="let item of order.orderList">
+              <div class="shopping-list-item-control">
+                <div class="shopping-list-item-info">
+                  <h5>{{item.medecineName}} <small>(Qty. {{ item.medecineQty }})</small></h5>
+                  <small>price: {{item.medecinePrice}}LE</small>
+                </div>
+              </div>
+              <div class="shopping-list-item-total">
+                <h5><small>Sub-Total</small> {{item.medecinePrice | multiply:item.medecineQty | number:'1.2-2'}} LE</h5>
+              </div>
+            </li>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

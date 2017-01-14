@@ -27,4 +27,8 @@ export class UserService {
     return this.af.database.list('/users/'+uid+'/addresses').push(address);
   }
 
+  deleteAddress(uid: string, addressKey: string): firebase.Promise<void> {
+    return this.af.database.list('/users/'+uid+'/addresses').remove(addressKey);
+  }
+
 }

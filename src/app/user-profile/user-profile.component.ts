@@ -18,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   private userInfo: User;
   private isAddress: boolean = true;
   private addresses: Address[];
+  private addressesKeys: string[];
 
 
   constructor(private router: Router, private authService: AuthenticationService, private userService: UserService) { }
@@ -48,6 +49,7 @@ export class UserProfileComponent implements OnInit {
         );
         if (userData.addresses) {
           this.addresses = Object.keys(userData.addresses).map(key=>userData.addresses[key]);
+          this.addressesKeys = Object.keys(userData.addresses);
           if (this.addresses.length > 0) {
             this.isAddress = false;
           } else {
@@ -72,6 +74,16 @@ export class UserProfileComponent implements OnInit {
         f.reset();
       }
     )
+  }
+
+  deleteAddress(i:number) {
+    this.userService.deleteAddress(this.userInfo['uid'], this.addressesKeys[i]).then(
+      (data)=> {
+        console.log(data);
+        this.getuserInfo(this.userInfo['uid']);
+      }
+    )
+
   }
 
 }

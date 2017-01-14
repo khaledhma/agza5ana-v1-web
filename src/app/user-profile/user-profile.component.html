@@ -12,7 +12,7 @@
       <ul class="list-group user-profile">
         <li class="list-group-item active"><i class="material-icons">local_post_office</i>&nbsp;&nbsp;Addresses</li>
         <li class="list-group-item adress-list" *ngFor="let address of addresses; let i=index">
-          <h5><i class="material-icons">done</i>{{ address.name }}</h5>
+          <h5><i class="material-icons">done</i>{{ address.name }}<button class="btn-solid-accent btn-small" (click)="deleteAddress(i)">Delete</button></h5>
           <h6>{{ address | formatAddress }}</h6>
         </li>
         <li class="list-group-item" *ngIf="isAddress">
