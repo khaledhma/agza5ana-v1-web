@@ -12,11 +12,12 @@ export class OrderService {
     return this.af.database.list('/orders').push(order);
   }
 
-  GetOrders(): FirebaseListObservable<any> {
+  getOrders(uid: string): FirebaseListObservable<any> {
     return this.af.database.list('/orders', {
     query: {
-      limitToFirst: 6,
-      orderByKey: true
+      orderByChild: 'orderSenderId',
+      equalTo: uid,
+      limitToLast: 10
     }
     });
   }

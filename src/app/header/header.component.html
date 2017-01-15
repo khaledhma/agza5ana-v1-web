@@ -5,10 +5,10 @@
   </a>
   <ul class="nav navbar-nav" *ngIf="loggedin">
     <li class="nav-item dropdown float-xs-right" (click)="toggle(dropdownMenu)" (mouseleave)="close(dropdownMenu)" #dropdownMenu>
-      <a class="nav-link dropdown-toggle" id="supportedContentDropdown" aria-haspopup="true" aria-expanded="false">{{ userName | slice:0:15 }}</a>
+      <a class="nav-link dropdown-toggle" id="supportedContentDropdown" aria-haspopup="true" aria-expanded="false"><span class="badge" *ngIf="newOrderCount>0?true:false">{{ newOrderCount }}</span>{{ userName | slice:0:15 }}</a>
       <div class="dropdown-menu dropdown-menu-right shift-menu-up" aria-labelledby="supportedContentDropdown">
         <a class="dropdown-item" [routerLink]="['userprofile']">Profile</a>
-        <a class="dropdown-item" [routerLink]="['orders']">My Orders</a>
+        <a class="dropdown-item" [routerLink]="['orders']">My Orders&nbsp;&nbsp;<span class="new-order" *ngIf="newOrderCount>0?true:false">{{ newOrderCount }}<small>&nbsp;NEW</small></span></a>
         <a class="dropdown-item" (click)="signout()">Logout</a>
       </div>
     </li>

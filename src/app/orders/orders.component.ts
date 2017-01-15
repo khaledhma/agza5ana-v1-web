@@ -14,6 +14,7 @@ export class OrdersComponent implements OnInit {
 
   private orderList: Order[] = [];
   private colapse: boolean[] =[];
+  private loading: boolean = true;
 
   constructor(private orderService: OrderService, private renderer: Renderer, private authService: AuthenticationService, private router: Router) { }
 
@@ -21,10 +22,11 @@ export class OrdersComponent implements OnInit {
     this.authService.isAuthenticated().subscribe(
       (user) => {
         if (user) {
-          this.orderService.GetOrders().subscribe(
+          this.orderService.getOrders(user.uid).subscribe(
             (data) =>
             {
-              this.orderList = data;
+              this.loading = false;
+              this.orderList = data.reverse();
               for(let i=0; i < this.orderList.length; i++) {
                 this.colapse.push(true);
               }

@@ -3,8 +3,8 @@ var parseJson = require('parse-json');
 
 var serviceAccount = require("./agza5ana-v1-bb35c-firebase-adminsdk-hpqgv-3e5b1d8c94.json");
 
-var medicineInfo = require("./medecineInfo.json");
-// var medicineName = require("./medecineName.json");
+// var medicineInfo = require("./medecineInfo.json");
+var medicineName = require("./medecineName.json");
 // var medicineBarcode = require("./medecineBarcode.json");
 // var medicineNameArabic = require("./medicineNameArabic.json");
 
@@ -26,20 +26,20 @@ var db = admin.database();
 //   function(err) {
 //     console.log(err);
 //   });
-db.ref("medicineInfo").set(medicineInfo,function(error){
-  if(error) {
-    console.error(error);
-  } else {
-    console.log("success");
-  }
-});
-// db.ref("medicineName").set(medicineName,function(error){
+// db.ref("medicineInfo").set(medicineInfo,function(error){
 //   if(error) {
 //     console.error(error);
 //   } else {
 //     console.log("success");
 //   }
 // });
+db.ref("medicineName").set(medicineName,function(error){
+  if(error) {
+    console.error(error);
+  } else {
+    console.log("success");
+  }
+});
 // db.ref("medicineBarcode").set(medicineBarcode,function(error){
 //   if(error) {
 //     console.error(error);

@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
         this.isError = false;
         this.userService.getUserProfile(user.uid).subscribe(
           (userData) => {
-            userData.hasOwnProperty('displayName')?console.log('yes'):console.log('no');
             if (!userData.hasOwnProperty('displayName')) {
               let userNewData = new User(user.auth.displayName,"",user.uid);
               this.userService.updateUserProfile(userNewData).then(()=>console.log('update success'));

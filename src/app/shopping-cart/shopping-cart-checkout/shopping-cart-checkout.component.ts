@@ -26,6 +26,7 @@ export class ShoppingCartCheckoutComponent implements OnInit {
   private isAddress: boolean = true;
   private addresses: Address[] = [];
   private addressesKeys: string[];
+  private sending: boolean = false;
 
   constructor(private router: Router,
                private shoppingListService: ShoppingListService,
@@ -50,7 +51,6 @@ export class ShoppingCartCheckoutComponent implements OnInit {
   getuserInfo(uid: string) {
     this.userService.getUserProfile(uid).subscribe(
       (userData) => {
-        console.log(userData);
         this.userInfo = new User(
           userData.displayName,
           userData.email,
@@ -92,7 +92,6 @@ export class ShoppingCartCheckoutComponent implements OnInit {
     }
     this.userService.addAddress(this.userInfo['uid'], Object.assign(formValue, { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
       (data) => {
-        console.log(data);
         this.getuserInfo(this.userInfo['uid']);
         f.reset();
       }
@@ -100,14 +99,14 @@ export class ShoppingCartCheckoutComponent implements OnInit {
   }
 
   sendOrder(f:NgForm) {
+    this.sending = true;
     if (this.addressSelected == this.addresses.length) {
       this.saveAddress(f);
     }
     let order = new Order(this.user.uid, this.addresses[this.addressSelected], new Date().getTime() , undefined, undefined, undefined, this.shoppingList , this.getTotal());
-    console.log(order);
     this.orderService.sendOrder(order).then(
       (data)=>{
-        console.log(data);
+        this.sending = false;
         this.shoppingListService.deleteList(this.user.uid);
         this .router.navigate(['orders']);
       }

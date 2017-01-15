@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, Renderer, Output, EventEmitter, OnDestro
 import { AuthenticationService } from '../authentication.service';
 import { Subscription } from 'rxjs/Rx';
 
+import { OrderService } from '../order.service';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,8 +14,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private loggedin: boolean = false;
   private userName: string;
+  private newOrderCount: number = 0;
 
-  constructor(private renderer: Renderer, private authService:AuthenticationService) { }
+  constructor(private renderer: Renderer, private authService:AuthenticationService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.subscription = this.authService.isAuthenticated().subscribe(
@@ -22,6 +25,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.loggedin=data?true:false;
         if (data) {
           this.userName = data.auth.displayName;
+          this.orderService.getOrders(data.uid).subscribe(
+            (data)=>
+            {
+              console.log(data);
+              let filterData = data.filter((item)=>{
+                return item['orderStatus']=='pending'?true:false;
+              });
+              console.log(filterData);
+              this.newOrderCount=filterData.length
+            },
+            (error)=>console.log(error)
+          )
         } else {
           this.userName = "";
         }

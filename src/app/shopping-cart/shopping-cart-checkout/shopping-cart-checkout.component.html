@@ -1,3 +1,20 @@
+<div class="backdrop-small" *ngIf="sending">
+  <h5>Sending Order...</h5>
+  <div class="sk-fading-circle spinner">
+    <div class="sk-circle1 sk-circle"></div>
+    <div class="sk-circle2 sk-circle"></div>
+    <div class="sk-circle3 sk-circle"></div>
+    <div class="sk-circle4 sk-circle"></div>
+    <div class="sk-circle5 sk-circle"></div>
+    <div class="sk-circle6 sk-circle"></div>
+    <div class="sk-circle7 sk-circle"></div>
+    <div class="sk-circle8 sk-circle"></div>
+    <div class="sk-circle9 sk-circle"></div>
+    <div class="sk-circle10 sk-circle"></div>
+    <div class="sk-circle11 sk-circle"></div>
+    <div class="sk-circle12 sk-circle"></div>
+  </div>
+</div>
 <div class="col-md-6">
   <div class="card" *ngIf="shoppingList.length==0">
     <h4>No items in the shopping list.....</h4>
@@ -22,36 +39,36 @@
 </div>
 <div class="col-md-6">
   <form #f="ngForm">
-  <div class="list-group card" [hidden]="shoppingList.length==0">
-    <a class="list-group-item adress-list-header">
-      <p> </p>
-      <button class="btn-solid-accent ripple" (click)="sendOrder(f)" [disabled]="(addressSelected==addresses.length?true:false)&&(f.invalid)">Send Order</button>
-    </a>
-    <a class="list-group-item adress-list-saved" *ngFor="let address of addresses, let i=index">
-      <div class="form-check">
-        <label class="form-check-label" for="addressName">
+    <div class="list-group card" [hidden]="shoppingList.length==0">
+      <a class="list-group-item adress-list-header">
+        <p> </p>
+        <button class="btn-solid-accent ripple" (click)="sendOrder(f)" [disabled]="(addressSelected==addresses.length?true:false)&&(f.invalid)">Send Order</button>
+      </a>
+      <a class="list-group-item adress-list-saved" *ngFor="let address of addresses, let i=index">
+        <div class="form-check">
+          <label class="form-check-label" for="addressName">
             <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="i"  [(ngModel)]="addressSelected">
             <b>{{address.name}}</b>
           </label>
-      </div>
-      <h6>{{ address | formatAddress }}</h6>
-    </a>
-    <a class="list-group-item adress-list-saved" *ngIf="isAddress">
-      <p>No Saved Adresses. Please use the form to add new address</p>
-    </a>
-    <a class="list-group-item add-new-address">
-      <div class="form-check address-name">
-        <label class="form-check-label" for="addressName">
+        </div>
+        <h6>{{ address | formatAddress }}</h6>
+      </a>
+      <a class="list-group-item adress-list-saved" *ngIf="isAddress">
+        <p>No Saved Adresses. Please use the form to add new address</p>
+      </a>
+      <a class="list-group-item add-new-address">
+        <div class="form-check address-name">
+          <label class="form-check-label" for="addressName">
             <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="addresses.length" [(ngModel)]="addressSelected">
             <input type="text" class="form-control" id="name" placeholder="Enter address name" ngModel name="name" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
           </label>
-      </div>
-      <input type="text" class="form-control" id="apartment" placeholder="Apartment number" ngModel name="apartment" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-      <input type="text" class="form-control" id="building" placeholder="Building number" ngModel name="building" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-      <input type="text" class="form-control" id="street" placeholder="Street name" ngModel name="street" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-      <input type="text" class="form-control" id="area" placeholder="Area" ngModel name="area" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-      <input type="text" class="form-control" id="city" placeholder="City" ngModel name="city" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-    </a>
-  </div>
-</form>
+        </div>
+        <input type="text" class="form-control" id="apartment" placeholder="Apartment number" ngModel name="apartment" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+        <input type="text" class="form-control" id="building" placeholder="Building number" ngModel name="building" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+        <input type="text" class="form-control" id="street" placeholder="Street name" ngModel name="street" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+        <input type="text" class="form-control" id="area" placeholder="Area" ngModel name="area" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+        <input type="text" class="form-control" id="city" placeholder="City" ngModel name="city" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
+      </a>
+    </div>
+  </form>
 </div>

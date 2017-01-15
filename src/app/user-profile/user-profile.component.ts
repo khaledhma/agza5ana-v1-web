@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   private isAddress: boolean = true;
   private addresses: Address[];
   private addressesKeys: string[];
+  private loading: boolean = true;
 
 
   constructor(private router: Router, private authService: AuthenticationService, private userService: UserService) { }
@@ -39,7 +40,7 @@ export class UserProfileComponent implements OnInit {
   getuserInfo(uid: string) {
     this.userService.getUserProfile(uid).subscribe(
       (userData) => {
-        console.log(userData);
+        this.loading = false;
         this.userInfo = new User(
           userData.displayName,
           userData.email,
@@ -69,7 +70,6 @@ export class UserProfileComponent implements OnInit {
   saveAddress(f: NgForm) {
     this.userService.addAddress(this.userInfo['uid'], Object.assign(f['value'], { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
       (data) => {
-        console.log(data);
         this.getuserInfo(this.userInfo['uid']);
         f.reset();
       }
@@ -79,7 +79,6 @@ export class UserProfileComponent implements OnInit {
   deleteAddress(i:number) {
     this.userService.deleteAddress(this.userInfo['uid'], this.addressesKeys[i]).then(
       (data)=> {
-        console.log(data);
         this.getuserInfo(this.userInfo['uid']);
       }
     )
