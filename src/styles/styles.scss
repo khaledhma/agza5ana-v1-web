@@ -162,6 +162,14 @@ nav {
   }
 }
 
+.modal-footer {
+  .sk-fading-circle {
+    .sk-circle:before {
+      background-color: $color-primary!important;
+    }
+  }
+}
+
 .shopping-list-item {
   display: flex;
   flex-direction: row;
@@ -334,6 +342,7 @@ nav {
   flex-direction: row;
   flex-wrap: wrap;
   .order-card {
+    align-self: flex-start;
     margin: 10px;
     flex-basis: 300px;
     flex-grow: 1;
@@ -343,6 +352,14 @@ nav {
     .pending {
       border-color: 1px solid $color-accent;
       color: $color-accent;
+      .sk-fading-circle {
+        margin: 0px;
+        top: 0%;
+        transform: translateY(0%);
+        .sk-circle:before {
+          background-color: $color-accent!important;
+        }
+      }
     }
     .accepted {
       background-color: $color-accent!important;
@@ -369,12 +386,19 @@ nav {
       }
     }
     .order-content-list {
-      li:last-child {
-        padding: 0px!important;
-        border-radius: 10px!important;
+      >li{
+        &:first-child {
+          border-radius: 10px!important;
+        }
       }
-      li:first-child {
-        border-radius: 10px!important;
+      >li{
+        &:last-child {
+          border-radius: 0px 0px 10px 10px!important;
+          padding: 0px;
+          li {
+            padding: 5px;
+          }
+        }
       }
     }
   }
