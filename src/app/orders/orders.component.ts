@@ -1,5 +1,6 @@
-import { Component, OnInit, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 import { OrderService } from '../order.service';
 import { Order } from '../order';
@@ -10,11 +11,12 @@ import { AuthenticationService } from '../authentication.service';
   templateUrl: './orders.component.html',
   styles: []
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
 
   private orderList: Order[] = [];
   private colapse: boolean[] =[];
   private loading: boolean = true;
+  private orderSubscription: Subscription;
 
   constructor(private orderService: OrderService, private renderer: Renderer, private authService: AuthenticationService, private router: Router) { }
 
@@ -22,7 +24,7 @@ export class OrdersComponent implements OnInit {
     this.authService.isAuthenticated().subscribe(
       (user) => {
         if (user) {
-          this.orderService.getOrders(user.uid).subscribe(
+          this.orderSubscription = this.orderService.getOrders(user.uid).subscribe(
             (data) =>
             {
               this.loading = false;
@@ -38,6 +40,10 @@ export class OrdersComponent implements OnInit {
         }
       }
     )
+  }
+
+  ngOnDestroy() {
+    this.orderSubscription.unsubscribe();
   }
 
   showDetails(collapseable: ElementRef, i: number) {

@@ -28,11 +28,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.orderService.getOrders(data.uid).subscribe(
             (data)=>
             {
-              console.log(data);
+              console.log('getOrders from header',data);
               let filterData = data.filter((item)=>{
                 return item['orderStatus']=='pending'?true:false;
               });
-              console.log(filterData);
               this.newOrderCount=filterData.length
             },
             (error)=>console.log(error)

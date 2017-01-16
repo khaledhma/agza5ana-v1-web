@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/take';
 
 import { User } from './user';
 import { Address } from './address';
@@ -21,6 +23,10 @@ export class UserService {
 
   getUserProfile(uid: string): FirebaseObjectObservable<any> {
     return this.af.database.object('/users/'+uid);
+  }
+
+  getUserName(uid: string): Observable<any> {
+    return this.af.database.object('/users/'+uid).take(1);
   }
 
   addAddress(uid: string, address: Address): firebase.Promise<void> {

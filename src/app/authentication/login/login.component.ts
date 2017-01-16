@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { AuthenticationService } from '../../authentication.service';
 import { UserService } from '../../user.service';
@@ -10,7 +11,7 @@ import { User } from '../../user';
   templateUrl: './login.component.html',
   styles: []
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   private showSpinner: boolean = false;
   private errorMessage: string = "";
@@ -19,6 +20,9 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
   }
 
   login (form: NgForm) {
@@ -30,7 +34,7 @@ export class LoginComponent implements OnInit {
         this.showSpinner = false;
         this.errorMessage = "";
         this.isError = false;
-        this.userService.getUserProfile(user.uid).subscribe(
+        this.userService.getUserName(user.uid).subscribe(
           (userData) => {
             if (!userData.hasOwnProperty('displayName')) {
               let userNewData = new User(user.auth.displayName,"",user.uid);
@@ -54,6 +58,8 @@ export class LoginComponent implements OnInit {
 
   close(form: NgForm) {
     this.showSpinner = false;
+    this.errorMessage = "";
+    this.isError = false;
     this.authService.showLogin(false);
     this.reset(form);
   }

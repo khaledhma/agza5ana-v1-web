@@ -27,6 +27,7 @@ import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-che
 import { UserService } from './user.service';
 import { FormatAddressPipe } from './format-address.pipe';
 import { OrderService } from './order.service';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { OrderService } from './order.service';
     MultiplyPipe,
     UserProfileComponent,
     ShoppingCartCheckoutComponent,
-    FormatAddressPipe
+    FormatAddressPipe,
+    FooterComponent
     ],
   imports: [
     BrowserModule,

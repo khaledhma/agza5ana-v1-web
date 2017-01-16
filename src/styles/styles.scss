@@ -12,6 +12,12 @@ body {
   font-family: 'Roboto' , sans-serif;
   background-color: #eee;
   perspective: 600px;
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 60px;
+  @media screen and (max-width: 576px) {
+    padding-bottom: 120px !important;
+  }
 }
 
 a {
@@ -28,7 +34,7 @@ a {
     font-weight: bold;
 
     img {
-      border-radius: 0px;
+      border-radius: 0;
     }
   }
 }
@@ -53,20 +59,19 @@ nav {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0px;
+  top: 0;
   left: -30px;
   width: 25px;
   height: 25px;
   border-radius: 12.5px;
   background-color: $color-accent;
   font-size: 12px;
+  color: #fff;
   font-weight: bold;
-  box-shadow: 0px 4px 8px 0px rgba(255, 255, 255, 0.2);
 }
 
 .new-order {
   color: $color-accent;
-  font-weight: bold;
 }
 
 .search-card {
@@ -74,11 +79,13 @@ nav {
   border-radius: 10px;
   background-color: $color-primary;
   color: #fff;
+
   .sk-fading-circle {
     .sk-circle:before {
       background-color: #fff!important;
     }
   }
+
   input[type="text"] {
     box-shadow: 0 4px 4px 0 rgba(0,0,0,0.16), 0 0 0 2px rgba(0,0,0,0.08)!important;
 
@@ -86,10 +93,25 @@ nav {
       border: 2px solid $color-accent !important;
     }
   }
+
+  .barcode-message {
+    background-color: $color-accent;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  br {
+    display: none;
+  }
+
+  @media screen and (max-width: 370px) {
+    br {
+      display: block;
+    }
+  }
 }
-
-
-
 
 .spinner {
   width: 20px;
@@ -216,6 +238,7 @@ nav {
       justify-content: center;
       align-items: center;
       margin-right: 10px;
+
       &:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         transform: translateZ(1px);
@@ -232,6 +255,7 @@ nav {
       display: flex;
       align-items: center;
       justify-content: flex-start;
+
       input {
         width: 50px;
         height: 30px;
@@ -241,6 +265,7 @@ nav {
         text-align: center;
         font-weight: bold;
       }
+
       a {
         font-weight: bold !important;
         font-size: 12px !important;
@@ -250,6 +275,7 @@ nav {
         width: 30px;
         height: 30px;
         border-radius: 0 15px 15px 0 !important;
+
         &:first-child {
           border-radius: 15px 0 0 15px !important;
         }
@@ -262,6 +288,7 @@ nav {
         border-color: lighten($color-accent, 0.5);
         cursor: not-allowed;
         opacity: 0.65;
+
         &:hover {
           box-shadow: 0 0 0 0 rgba(0,0,0,0);
           transform: none;
@@ -288,8 +315,8 @@ nav {
   }
 }
 
-.shopping-list-header,
-.adress-list-header {
+.adress-list-header,
+.shopping-list-header {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -306,7 +333,7 @@ nav {
 
 .adress-list-saved {
   .form-check {
-    margin-bottom: 0px!important;
+    margin-bottom: 0 !important;
   }
 }
 
@@ -316,11 +343,12 @@ nav {
   flex-direction: column;
 
   input {
-    margin-top: auto!important;
-    margin-bottom: auto!important;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
     box-shadow: none!important;
+
     &[type="text"] {
-      margin-bottom: 5px!important;
+      margin-bottom: 5px !important;
     }
   }
 
@@ -336,15 +364,18 @@ nav {
 .user-profile {
   margin-bottom: 10px;
   position: relative;
+
   .list-group-item {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: center;
   }
+
   .active {
     background-color: $color-primary;
     border-color: $color-primary;
+
     &:hover {
       background-color: $color-accent;
       border-color: $color-accent;
@@ -363,6 +394,7 @@ nav {
   flex-flow: row;
   flex-direction: row;
   flex-wrap: wrap;
+
   .order-card {
     align-self: flex-start;
     margin: 10px;
@@ -370,23 +402,28 @@ nav {
     flex-grow: 1;
     flex-shrink: 1;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px 0px rgba(0 , 0, 0, 0.5);
+    box-shadow: 0 4px 8px 0 rgba(0 , 0, 0, 0.5);
+
     .pending {
       border-color: 1px solid $color-accent;
       color: $color-accent;
+
       .sk-fading-circle {
-        margin: 0px;
-        top: 0%;
+        margin: 0;
+        top: 0;
         transform: translateY(0%);
+
         .sk-circle:before {
           background-color: $color-accent!important;
         }
       }
     }
+
     .accepted {
       background-color: $color-accent!important;
       color: #fff!important;
     }
+
     .header {
       display: flex;
       flex-direction: row;
@@ -395,29 +432,36 @@ nav {
       justify-content: space-between;
       align-items: center;
     }
+
     .show-more {
+      border-radius: 0 0 10px 10px!important;
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: $color-primary;
       color: #fff;
-      padding: 5px!important;
+      padding: 5px !important;
       cursor: pointer;
+
       &:hover {
         background-color: lighten($color-primary, 8%)!important;
       }
     }
+
     .order-content-list {
-      >li{
+      > li {
         &:first-child {
           border-radius: 10px!important;
         }
       }
-      >li{
+
+      > li {
         &:last-child {
-          border-radius: 0px 0px 10px 10px!important;
-          padding: 0px;
+          border-radius: 10px 10px 10px 10px!important;
+          padding: 0;
+
           li {
+            border-radius: 10px 10px 10px 10px!important;
             padding: 5px;
           }
         }
@@ -427,7 +471,7 @@ nav {
 }
 
 .loading-orders {
-  box-shadow: 0px 8px 16px 0px rgba(0 , 0, 0, 0.5);
+  box-shadow: 0 8px 16px 0 rgba(0 , 0, 0, 0.5);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -435,15 +479,18 @@ nav {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
   h5 {
     color: $color-accent;
   }
+
   .sk-fading-circle {
     width: 100px!important;
     height: 100px!important;
-    margin: 0px;
-    top: 0%;
+    margin: 0;
+    top: 0;
     transform: translateY(0%);
+
     .sk-circle:before {
       background-color: $color-accent!important;
     }
@@ -461,10 +508,10 @@ nav {
 .backdrop-small {
   z-index: 50;
   position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   color: #fff;
   display: flex;
   flex-flow: column;
@@ -474,14 +521,45 @@ nav {
   align-items: center;
   background-color: $color-primary;
   opacity: 0.7;
+
   .sk-fading-circle {
     width: 50px!important;
     height: 50px!important;
-    margin: 0px;
-    top: 0%;
+    margin: 0;
+    top: 0;
     transform: translateY(0%);
+
     .sk-circle:before {
       background-color: #fff!important;
     }
+  }
+}
+
+.footer {
+  display: flex;
+  flex-flow: row;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background-color: $color-primary;
+  color: #fff!important;
+  padding: 0 10px;
+
+  img {
+    box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.5);
+  }
+  @media screen and (max-width: 576px) {
+    flex-direction: column;
+    flex-flow: column;
+    height: 100px;
+    line-height: 50px;
+    padding: 0;
+    flex-wrap: nowrap;
   }
 }

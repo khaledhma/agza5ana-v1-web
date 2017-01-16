@@ -40,7 +40,7 @@
             <div class="sk-circle12 sk-circle"></div>
           </div>
           {{ order.orderStatus | uppercase }}
-          <h5><small>Total</small>&nbsp;&nbsp;{{ order.orderTotal }}&nbsp;LE</h5>
+          <h5><small>Total</small>&nbsp;&nbsp;{{ order.orderTotal | number:'1.2-2' }}&nbsp;LE</h5>
         </li>
         <li class="list-group-item">
           Sent At:&nbsp;&nbsp; {{ order.orderTime | date:'MMM d, y h:m a'}}

@@ -51,6 +51,8 @@ export class SignupComponent implements OnInit {
 
   close(form: NgForm) {
     this.showSpinner = false;
+    this.errorMessage = "";
+    this.isError = false;
     this.authService.showLogin(false);
     this.reset(form);
   }

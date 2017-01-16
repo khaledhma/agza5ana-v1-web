@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { AuthenticationService } from '../authentication.service';
 import { UserService } from '../user.service';
@@ -13,13 +14,14 @@ import { Address } from '../address';
   templateUrl: './user-profile.component.html',
   styles: []
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
   private userInfo: User;
   private isAddress: boolean = true;
   private addresses: Address[];
   private addressesKeys: string[];
   private loading: boolean = true;
+  private userProfileSubscription: Subscription;
 
 
   constructor(private router: Router, private authService: AuthenticationService, private userService: UserService) { }
@@ -36,9 +38,13 @@ export class UserProfileComponent implements OnInit {
     )
   }
 
+  ngOnDestroy() {
+    this.userProfileSubscription.unsubscribe();
+  }
+
 
   getuserInfo(uid: string) {
-    this.userService.getUserProfile(uid).subscribe(
+    this.userProfileSubscription = this.userService.getUserProfile(uid).subscribe(
       (userData) => {
         this.loading = false;
         this.userInfo = new User(
@@ -70,7 +76,6 @@ export class UserProfileComponent implements OnInit {
   saveAddress(f: NgForm) {
     this.userService.addAddress(this.userInfo['uid'], Object.assign(f['value'], { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
       (data) => {
-        this.getuserInfo(this.userInfo['uid']);
         f.reset();
       }
     )
@@ -78,9 +83,7 @@ export class UserProfileComponent implements OnInit {
 
   deleteAddress(i:number) {
     this.userService.deleteAddress(this.userInfo['uid'], this.addressesKeys[i]).then(
-      (data)=> {
-        this.getuserInfo(this.userInfo['uid']);
-      }
+      (data)=> { console.log }
     )
 
   }

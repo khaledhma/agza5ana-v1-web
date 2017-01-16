@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { ShoppingItem } from '../shopping-item';
 import { ShoppingListService } from '../shopping-list.service';
@@ -17,7 +18,7 @@ import { OrderService } from '../../order.service';
   templateUrl: './shopping-cart-checkout.component.html',
   styles: []
 })
-export class ShoppingCartCheckoutComponent implements OnInit {
+export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
 
   private shoppingList: ShoppingItem[] = [];
   private user: any;
@@ -27,6 +28,7 @@ export class ShoppingCartCheckoutComponent implements OnInit {
   private addresses: Address[] = [];
   private addressesKeys: string[];
   private sending: boolean = false;
+  private userProfileSubscription: Subscription;
 
   constructor(private router: Router,
                private shoppingListService: ShoppingListService,
@@ -48,8 +50,12 @@ export class ShoppingCartCheckoutComponent implements OnInit {
     )
   }
 
+  ngOnDestroy() {
+    this.userProfileSubscription.unsubscribe();
+  }
+
   getuserInfo(uid: string) {
-    this.userService.getUserProfile(uid).subscribe(
+    this.userProfileSubscription = this.userService.getUserProfile(uid).subscribe(
       (userData) => {
         this.userInfo = new User(
           userData.displayName,
@@ -92,7 +98,6 @@ export class ShoppingCartCheckoutComponent implements OnInit {
     }
     this.userService.addAddress(this.userInfo['uid'], Object.assign(formValue, { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
       (data) => {
-        this.getuserInfo(this.userInfo['uid']);
         f.reset();
       }
     )
