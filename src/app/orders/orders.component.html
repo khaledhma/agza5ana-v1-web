@@ -48,6 +48,9 @@
         <li class="list-group-item">
           Delivery To:&nbsp;&nbsp; {{ order.senderAddress | formatAddress }}
         </li>
+        <li class="list-group-item" *ngIf="order.orderPhotoUrl!=''?true:false">
+          Attachement:&nbsp;&nbsp; <a [href]="order.orderPhotoUrl" target="_blank">Show document</a>
+        </li>
         <li class="list-group-item">
           Accepted By:&nbsp;&nbsp; {{ order.orderAcceptedBy!='none'?order.orderAcceptedBy:'--------'}}
         </li>

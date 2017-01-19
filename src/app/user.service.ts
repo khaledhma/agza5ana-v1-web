@@ -12,7 +12,8 @@ export class UserService {
   constructor(private af:AngularFire) { }
 
   createUser(user: User): firebase.Promise<void> {
-    let userNode = {[user['uid']]:{"email":user['email']}};
+    let userNode = {[user['uid']]:{"email":user['email'],"mode":user['mode']}};
+    console.log(userNode);
     return this.af.database.object('/users').update(userNode);
   }
 

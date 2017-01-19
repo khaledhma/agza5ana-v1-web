@@ -63,15 +63,17 @@ nav {
   left: -30px;
   width: 25px;
   height: 25px;
-  border-radius: 12.5px;
+  border-radius: 7.5px;
   background-color: $color-accent;
   font-size: 12px;
   color: #fff;
   font-weight: bold;
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
 .new-order {
   color: $color-accent;
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
 .search-card {
@@ -79,6 +81,7 @@ nav {
   border-radius: 10px;
   background-color: $color-primary;
   color: #fff;
+  box-shadow: 0 8px 16px 0 rgba(0 , 0, 0, 0.5);
 
   .sk-fading-circle {
     .sk-circle:before {
@@ -107,6 +110,12 @@ nav {
   }
 
   @media screen and (max-width: 370px) {
+    br {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 768px) and (min-width: 576px) {
     br {
       display: block;
     }
@@ -312,6 +321,66 @@ nav {
     small {
       color: $color-accent!important;
     }
+  }
+}
+
+.progress {
+  display: flex;
+  .progress-container {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: lighten($color-accent, 25%);
+    width: 100%;
+    border-radius: 5px;
+    .progress-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color: $color-accent;
+      height: 80%;
+      width: 80%;
+      border-radius: 5px;
+      .progress-text {
+        position: absolute;
+        // left: 50%;
+        color: #fff;
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+input[type="file"] {
+  width: 100%;
+}
+
+.img-thumb {
+  margin: 10px auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  display: flex;
+  flex-flow: column;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: lighten($color-primary , 70%);
+  position: relative;
+  img {
+    width: 80px;
+    height: auto;
+    max-height: 100px;
+  }
+  .delete-img-thumb {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 0px;
+    margin: 0px;
   }
 }
 
@@ -545,8 +614,8 @@ nav {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   background-color: $color-primary;
   color: #fff!important;
   padding: 0 10px;
@@ -557,9 +626,13 @@ nav {
   @media screen and (max-width: 576px) {
     flex-direction: column;
     flex-flow: column;
-    height: 100px;
-    line-height: 50px;
+    height: 120px;
+    line-height: 60px;
     padding: 0;
     flex-wrap: nowrap;
+
+    img {
+
+    }
   }
 }

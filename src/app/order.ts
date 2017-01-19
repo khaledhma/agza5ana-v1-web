@@ -10,7 +10,8 @@ export class Order {
               private orderAcceptedBy: string = 'none',
               private orderGeoArea: number = 0,
               private orderList: ShoppingItem[],
-              private orderTotal: number) {
+              private orderTotal: number,
+              private orderPhotoUrl: string) {
 
   }
 

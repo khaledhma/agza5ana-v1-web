@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.userService.getUserName(user.uid).subscribe(
           (userData) => {
             if (!userData.hasOwnProperty('displayName')) {
-              let userNewData = new User(user.auth.displayName,"",user.uid);
+              let userNewData = new User(user.auth.displayName,"",user.uid,null);
               this.userService.updateUserProfile(userNewData).then(()=>console.log('update success'));
             }
           },

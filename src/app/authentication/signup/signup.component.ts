@@ -35,7 +35,7 @@ export class SignupComponent implements OnInit {
         this.showSpinner = false;
         this.errorMessage = "";
         this.isError = false;
-        let user = new User(data.auth.displayName,data.auth.email,data.uid);
+        let user = new User(data.auth.displayName,data.auth.email,data.uid,undefined);
         this.userService.createUser(user).then(()=>console.log('success'));
         this.authService.signout();
         this.switchPanel.emit();

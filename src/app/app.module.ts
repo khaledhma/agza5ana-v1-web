@@ -28,6 +28,7 @@ import { UserService } from './user.service';
 import { FormatAddressPipe } from './format-address.pipe';
 import { OrderService } from './order.service';
 import { FooterComponent } from './footer/footer.component';
+import { PharmacyComponent } from './pharmacy/pharmacy.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { FooterComponent } from './footer/footer.component';
     UserProfileComponent,
     ShoppingCartCheckoutComponent,
     FormatAddressPipe,
-    FooterComponent
+    FooterComponent,
+    PharmacyComponent
     ],
   imports: [
     BrowserModule,

@@ -35,6 +35,23 @@
         <h5><small>Sub-Total</small> {{item.medecinePrice | multiply:item.medecineQty | number:'1.2-2'}} LE</h5>
       </div>
     </a>
+    <a class="list-group-item shopping-list-item">
+      <div class="form-group">
+        <input type="file" class="form-control-file btn-solid-primary btn" id="file" aria-describedby="fileHelp" (change)="fileChange($event)">
+        <small id="fileHelp" class="form-text text-muted">Upload any document if needed</small>
+      </div>
+      <div class="progress" *ngIf="showProgressBar">
+        <div class="progress-container">
+          <div class="progress-bar" [style.width]="progressBar+'%'">
+            <span class="progress-text">{{ progressBar | number:'1.2-2'}}&nbsp;%</span>
+          </div>
+        </div>
+      </div>
+      <div class="img-thumb" *ngIf="showImage">
+        <button class="btn-solid-accent btn-small delete-img-thumb" (click)="deleteImage()">Delete</button>
+        <img [src]="uploadedImageUrl" calss="img-fluid">
+      </div>
+    </a>
   </div>
 </div>
 <div class="col-md-6">

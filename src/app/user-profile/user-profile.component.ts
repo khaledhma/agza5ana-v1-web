@@ -51,6 +51,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           userData.displayName,
           userData.email,
           userData.$key,
+          userData.mode,
           null,
           userData.addresses ? userData.addresses : null
         );
