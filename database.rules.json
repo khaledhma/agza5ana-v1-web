@@ -8,24 +8,28 @@
       ".read": true,
       ".write": true
     },
- 		"medicineName": {
+    "medicineName": {
       ".read": true,
       ".write": true
     },
- 		"medicineNameArabic": {
+    "medicineNameArabic": {
       ".read": true,
       ".write": true
     },
- 		"orders": {
+    "orders": {
       ".read": true,
       ".write": true,
-      ".indexOn": "orderSenderId"
+      ".indexOn": ["orderSenderId", "orderStatus", "orderAcceptedBy"]
     },
- 		"users": {
+    "users": {
       "$uid": {
-        ".write": "auth != null && $uid === auth.uid",
-        ".read": "auth != null && $uid === auth.uid"
+        ".write": true,
+        ".read": true
       }
+    },
+    "sellbuy": {
+      ".read": true,
+      ".write": true,
     }
   }
 }

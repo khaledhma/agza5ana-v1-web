@@ -1,0 +1,87 @@
+<div class="col-lg-12">
+  <div class="card sell-buy-form" *ngIf="isLogged">
+    <form #f="ngForm">
+      <div class="sell-buy-row">
+        <label><b>I want to:&nbsp;&nbsp;</b>
+          <input type="radio" name="postType" id="postType" value="sell" [(ngModel)]="postType">Sell&nbsp;
+          <input type="radio" name="postType" id="postType" value="buy" [(ngModel)]="postType">Buy&nbsp;
+        </label>
+        <label><b class="postby">By:&nbsp;&nbsp;{{ userName }}</b>
+        </label>
+      </div>
+      <div class="sell-buy-row">
+        <div class="progress" *ngIf="showProgressBar">
+          <div class="progress-container">
+            <div class="progress-bar" [style.width]="progressBar+'%'">
+              <span class="progress-text">{{ progressBar | number:'1.2-2'}}&nbsp;%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sell-buy-row">
+        <div class="form-group">
+          <input type="file" class="form-control-file btn-solid-primary btn" id="file" aria-describedby="fileHelp" (change)="fileChange($event)">
+        </div>
+        <div class="img-thumb">
+          <button class="btn-solid-accent btn-small delete-img-thumb" (click)="deleteImage()" *ngIf="showImage">Delete</button>
+          <img [src]="uploadedImageUrl" calss="img-fluid">
+        </div>
+      </div>
+      <div class="sell-buy-row">
+        <span><b>Medecine Name: </b><input type="text" class="form-control" ngModel name="medecineName" required = "true"></span>
+        <span><b>Price: </b><input type="text" class="form-control" ngModel name="price" required = "true" pattern="^[1-9]\d*(\.\d+)?$"></span>
+        <span><b>Quantity: </b><input type="text" class="form-control" ngModel name="qty" required = "true" pattern="^[1-9]\d*(\.\d+)?$"></span>
+        <span><b>Total: </b><input type="text" class="form-control" name="total" value = "{{ +f.value.qty*+f.value.price | number:'1.2-2' }}" disabled="true"></span>
+      </div>
+      <div class="sell-buy-row">
+        <button class="btn-solid-accent ripple" (click)="post(f)" [disabled]="f.invalid">Send Post</button>
+      </div>
+    </form>
+  </div>
+  <hr>
+  <div class="loading-orders card" *ngIf="loading">
+    <h4>Loading Posts</h4>
+    <h5>Please Wait...</h5>
+    <div class="sk-fading-circle spinner">
+      <div class="sk-circle1 sk-circle"></div>
+      <div class="sk-circle2 sk-circle"></div>
+      <div class="sk-circle3 sk-circle"></div>
+      <div class="sk-circle4 sk-circle"></div>
+      <div class="sk-circle5 sk-circle"></div>
+      <div class="sk-circle6 sk-circle"></div>
+      <div class="sk-circle7 sk-circle"></div>
+      <div class="sk-circle8 sk-circle"></div>
+      <div class="sk-circle9 sk-circle"></div>
+      <div class="sk-circle10 sk-circle"></div>
+      <div class="sk-circle11 sk-circle"></div>
+      <div class="sk-circle12 sk-circle"></div>
+    </div>
+  </div>
+  <div class="loading-orders card" *ngIf="!loading&&(posts.length==0?true:false)">
+    <h4>There are no recent posts...</h4>
+  </div>
+  <div *ngIf="!loading&&(posts.length>0?true:false)">
+    <div class="card sell-buy-form" *ngFor="let post of posts">
+      <form>
+        <div class="sell-buy-row">
+          <label><b>I want to:&nbsp;&nbsp;</b>
+              {{ post.postType }}
+            </label>
+          <label><b class="postby">By:&nbsp;&nbsp;{{ post.userName }}</b>
+            </label>
+        </div>
+        <div class="sell-buy-row">
+          <div class="img-thumb">
+            <img [src]="post.photoUrl?post.photoUrl:''" calss="img-fluid">
+          </div>
+        </div>
+        <div class="sell-buy-row">
+          <span><b>Medecine Name: </b><input type="text" class="form-control" value = "{{ post.medecineName }}" disabled="true"></span>
+          <span><b>Price: </b><input type="text" class="form-control" value = "{{ post.price }}" disabled="true"></span>
+          <span><b>Quantity: </b><input type="text" class="form-control" value = "{{ post.qty }}" disabled="true"></span>
+          <span><b>Total: </b><input type="text" class="form-control" value = "{{ post.total }}" disabled="true"></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

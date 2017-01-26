@@ -30,6 +30,8 @@ import { OrderService } from './order.service';
 import { FooterComponent } from './footer/footer.component';
 import { AuthGuard } from './auth-guard';
 import { PharmacyOrderComponent } from './pharmacy-order/pharmacy-order.component';
+import { SellBuyComponent } from './sell-buy/sell-buy.component';
+import { SellBuyService } from './sell-buy.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { PharmacyOrderComponent } from './pharmacy-order/pharmacy-order.componen
     ShoppingCartCheckoutComponent,
     FormatAddressPipe,
     FooterComponent,
-    PharmacyOrderComponent
+    PharmacyOrderComponent,
+    SellBuyComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,7 @@ import { PharmacyOrderComponent } from './pharmacy-order/pharmacy-order.componen
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService, AuthGuard],
+  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService, AuthGuard, SellBuyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

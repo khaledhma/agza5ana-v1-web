@@ -7,9 +7,11 @@ import { ShoppingCartCheckoutComponent } from './shopping-cart/shopping-cart-che
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthGuard } from './auth-guard';
 import { PharmacyOrderComponent } from './pharmacy-order/pharmacy-order.component';
+import { SellBuyComponent } from './sell-buy/sell-buy.component';
 
 export const appRoutes: Routes = [
   { path: '', component: MedecineInfoComponent, pathMatch: 'full' },
+  { path: 'sell-buy', component: SellBuyComponent },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
   { path: 'pharmacy_orders', component: PharmacyOrderComponent, canActivate: [AuthGuard] },
   { path: 'shoppinglist', component: ShoppingCartListComponent, pathMatch: 'full', canActivate: [AuthGuard] },

@@ -20,8 +20,23 @@ body {
   }
 }
 
+nav {
+  display: flex!important;
+  flex-flow: row;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap-reverse;
+}
+
+.navbar:after {
+  content:none;
+}
+
 a {
   cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .navbar {
@@ -634,5 +649,43 @@ input[type="file"] {
     img {
 
     }
+  }
+}
+
+.sell-buy-form {
+  display: flex;
+  flex-direction: column;
+  flex-flow: column;
+  flex-wrap: wrap;
+  padding: 10px;
+
+  input[type="text"] {
+    border: 1px solid $color-accent !important;
+    &:focus {
+      border: 2px solid $color-accent !important;
+    }
+  }
+
+  label {
+    margin: 0px;
+  }
+
+  .postby {
+    border-radius: 2.5px;
+    background-color: $color-accent;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 10px;
+  }
+
+  .sell-buy-row {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
   }
 }
