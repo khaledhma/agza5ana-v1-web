@@ -16,6 +16,7 @@ import { Address } from '../address';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
 
+  private loggedInUser: User;
   private userInfo: User;
   private isAddress: boolean = true;
   private addresses: Address[];
@@ -27,15 +28,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private authService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
-    this.authService.isAuthenticated().subscribe(
-      (user) => {
-        if (user) {
-          this.getuserInfo(user.uid);
-        } else {
-          this.router.navigate(['/']);
-        }
-      }
-    )
+    this.loggedInUser = this.userService.getUserProfileFromLocalStorage();
+    this.getuserInfo(this.loggedInUser['uid']);
   }
 
   ngOnDestroy() {

@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs/Rx';
 import { ShoppingListService } from '../shopping-list.service';
 import { AuthenticationService } from '../../authentication.service';
 import { ShoppingItem } from '../shopping-item';
-
+import { User } from '../../user';
+import { UserService } from '../../user.service';
 
 
 @Component({
@@ -18,14 +19,18 @@ export class ShoppingCartWidgetComponent implements OnInit {
   private shoppingList: ShoppingItem[] = [];
   private subscription: Subscription;
   private isShown = false;
+  private loggedin: boolean = false;
+  private loggedInUser: User;
 
-  constructor(private shoppingListService: ShoppingListService, private authService: AuthenticationService) { }
+  constructor(private shoppingListService: ShoppingListService, private authService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
-    this.authService.isAuthenticated().subscribe(
-      (user) => {
-        if (user) {
-          this.shoppingList = this.shoppingListService.getList(user.uid);
+    this.subscription = this.authService.isAuthenticated().subscribe(
+      (isLogged) => {
+        this.loggedin = isLogged;
+        if (isLogged) {
+          this.loggedInUser = this.userService.getUserProfileFromLocalStorage();
+          this.shoppingList = this.shoppingListService.getList(this.loggedInUser['uid']);
           this.itemCount = this.shoppingListService.getCurrentItemsCount();
           if (this.itemCount >= 1) {
             this.isShown = true;

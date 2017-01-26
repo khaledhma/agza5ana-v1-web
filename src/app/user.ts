@@ -6,8 +6,8 @@ export class User {
               private email: string,
               private uid: string,
               private mode:number = 0,
-              private orders?: string[],
-              private addresses?: Address[]) {
+              private orders: string[]=[],
+              private addresses: Address[]=[]) {
 
   }
 }

@@ -13,7 +13,7 @@ export class OrderService {
     return this.af.database.list('/orders').push(order);
   }
 
-  getOrders(uid: string): FirebaseListObservable<any> {
+  getOrdersOfUser(uid: string): FirebaseListObservable<any> {
     return this.af.database.list('/orders', {
       query: {
         orderByChild: 'orderSenderId',
@@ -21,6 +21,30 @@ export class OrderService {
         limitToLast: 10
       }
     });
+  }
+
+  getOrdersOfPharmacy(name: string): FirebaseListObservable<any> {
+    return this.af.database.list('/orders', {
+      query: {
+        orderByChild: 'orderAcceptedBy',
+        equalTo: name,
+        limitToLast: 10
+      }
+    });
+  }
+
+  getPendingOrders(): FirebaseListObservable<any> {
+    return this.af.database.list('/orders', {
+      query: {
+        orderByChild: 'orderStatus',
+        equalTo: 'pending',
+        limitToLast: 10
+      }
+    });
+  }
+
+  acceptOrder(orderId: string, accebtedBy: string): firebase.Promise<void> {
+    return this.af.database.object('/orders/'+ orderId).update({'orderStatus':'accepted', 'orderAcceptedBy':accebtedBy});
   }
 
   uploadImage(filaName: string, file: File): firebase.storage.UploadTask {

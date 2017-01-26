@@ -5,6 +5,10 @@ import { MedecineService } from '../../medecine.service';
 import { AuthenticationService } from '../../authentication.service';
 import { ShoppingListService } from '../../shopping-cart/shopping-list.service';
 import { ShoppingItem } from '../../shopping-cart/shopping-item';
+import { User } from '../../user';
+import { UserService } from '../../user.service';
+
+
 
 
 @Component({
@@ -19,45 +23,47 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() exist: boolean = false;
   private subscription: Subscription;
   private loggedin: boolean = false;
-  private user: any;
+  private loggedInUser: User;
 
 
 
-  constructor(private medecineService: MedecineService, private authService: AuthenticationService, private shoppingListService: ShoppingListService) {
- }
+  constructor(private medecineService: MedecineService, private authService: AuthenticationService, private shoppingListService: ShoppingListService, private userService: UserService) {
+  }
 
   ngOnChanges() {
 
     this.medecineService.getMedecineDetails(this.medecineId).subscribe(
-      (data)=> {
-        this.medecineDetails=data[0];
+      (data) => {
+        this.medecineDetails = data[0];
       },
-      (error)=> {
+      (error) => {
         console.error(error);
       }
     )
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.subscription = this.authService.isAuthenticated().subscribe(
-      (user)=> {
-        this.loggedin=user?true:false;
-        this.user = user;
+      (isLogged) => {
+        this.loggedin = isLogged;
+        if (isLogged) {
+          this.loggedInUser = this.userService.getUserProfileFromLocalStorage();
+        }
       }
     )
   }
 
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  addItem () {
-    let item:ShoppingItem = new ShoppingItem  (this.medecineDetails.name_med,
-                                               +this.medecineDetails.$key,
-                                               +this.medecineDetails.price,
-                                               +1,
-                                               "http://lorempixel.com/550/350/");
-    this.shoppingListService.addItem(item, this.user['uid']);
+  addItem() {
+    let item: ShoppingItem = new ShoppingItem(this.medecineDetails.name_med,
+      +this.medecineDetails.$key,
+      +this.medecineDetails.price,
+      +1,
+      "http://lorempixel.com/550/350/");
+    this.shoppingListService.addItem(item, this.loggedInUser['uid']);
   }
 
 }

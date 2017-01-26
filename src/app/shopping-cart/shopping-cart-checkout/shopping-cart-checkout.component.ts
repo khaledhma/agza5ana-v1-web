@@ -35,6 +35,8 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
   private uploadedImageFullPath: string = "";
   private showImage: boolean = false;
   private inputField: any;
+  private loggedInUser: User;
+
 
   constructor(private router: Router,
     private shoppingListService: ShoppingListService,
@@ -43,17 +45,9 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
     private orderService: OrderService) { }
 
   ngOnInit() {
-    this.authService.isAuthenticated().subscribe(
-      (user) => {
-        if (user) {
-          this.shoppingList = this.shoppingListService.getList(user.uid);
-          this.user = user;
-          this.getuserInfo(user.uid);
-        } else {
-          this.router.navigate(['/']);
-        }
-      }
-    )
+    this.loggedInUser = this.userService.getUserProfileFromLocalStorage();
+    this.shoppingList = this.shoppingListService.getList(this.loggedInUser['uid']);
+    this.getuserInfo(this.loggedInUser['uid']);
   }
 
   ngOnDestroy() {
@@ -115,11 +109,11 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
     if (this.addressSelected == this.addresses.length) {
       this.saveAddress(f);
     }
-    let order = new Order(this.user.uid, this.addresses[this.addressSelected], new Date().getTime(), undefined, undefined, undefined, this.shoppingList, this.getTotal(), this.uploadedImageUrl);
+    let order = new Order(this.loggedInUser['uid'], this.addresses[this.addressSelected], new Date().getTime(), undefined, undefined, undefined, this.shoppingList, this.getTotal(), this.uploadedImageUrl);
     this.orderService.sendOrder(order).then(
       (data) => {
         this.sending = false;
-        this.shoppingListService.deleteList(this.user.uid);
+        this.shoppingListService.deleteList(this.loggedInUser['uid']);
         this.router.navigate(['orders']);
       }
     )
@@ -132,18 +126,17 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
       this.showProgressBar = true;
       let emitProgress = new EventEmitter<number>();
       let emitImageData = new EventEmitter<[string]>();
-      let subscriber = emitProgress.subscribe((value)=>this.progressBar=value);
+      let subscriber = emitProgress.subscribe((value) => this.progressBar = value);
       let imageSubscriber = emitImageData.subscribe(
-        (value)=>
-        {
-          this.uploadedImageUrl=value[0];
-          this.uploadedImageFullPath=value[1];
+        (value) => {
+          this.uploadedImageUrl = value[0];
+          this.uploadedImageFullPath = value[1];
           this.showImage = true;
           this.showProgressBar = false;
         }
       );
       let file: File = fileList[0];
-      let uploadTask = this.orderService.uploadImage(file.name,file);
+      let uploadTask = this.orderService.uploadImage(file.name, file);
       // Listen for state changes, errors, and completion of the upload.
       uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
         function(snapshot) {
@@ -177,17 +170,17 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
         }, function() {
           // Upload completed successfully, now we can get the download URL
           console.log(uploadTask.snapshot.ref.fullPath);
-          emitImageData.emit([uploadTask.snapshot.downloadURL,uploadTask.snapshot.ref.fullPath]);
+          emitImageData.emit([uploadTask.snapshot.downloadURL, uploadTask.snapshot.ref.fullPath]);
         });
     }
   }
 
   deleteImage() {
     this.orderService.deleteImage(this.uploadedImageFullPath).then(
-      ()=> {
+      () => {
         this.showImage = false;
         this.uploadedImageUrl = "";
-        this.inputField.srcElement.value='';
+        this.inputField.srcElement.value = '';
       }
     ).catch(console.error);
   }

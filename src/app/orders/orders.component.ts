@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs/Rx';
 import { OrderService } from '../order.service';
 import { Order } from '../order';
 import { AuthenticationService } from '../authentication.service';
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-orders',
@@ -14,31 +16,25 @@ import { AuthenticationService } from '../authentication.service';
 export class OrdersComponent implements OnInit, OnDestroy {
 
   private orderList: Order[] = [];
-  private colapse: boolean[] =[];
+  private colapse: boolean[] = [];
   private loading: boolean = true;
   private orderSubscription: Subscription;
+  private loggedInUser: User;
 
-  constructor(private orderService: OrderService, private renderer: Renderer, private authService: AuthenticationService, private router: Router) { }
+
+  constructor(private orderService: OrderService, private renderer: Renderer, private authService: AuthenticationService, private router: Router, private userService: UserService) { }
 
   ngOnInit() {
-    this.authService.isAuthenticated().subscribe(
-      (user) => {
-        if (user) {
-          this.orderSubscription = this.orderService.getOrders(user.uid).subscribe(
-            (data) =>
-            {
-              this.loading = false;
-              this.orderList = data.reverse();
-              for(let i=0; i < this.orderList.length; i++) {
-                this.colapse.push(true);
-              }
-            },
-            (error) => console.log(error)
-          )
-        } else {
-          this.router.navigate(['/']);
+    this.loggedInUser = this.userService.getUserProfileFromLocalStorage();
+    this.orderSubscription = this.orderService.getOrdersOfUser(this.loggedInUser['uid']).subscribe(
+      (data) => {
+        this.loading = false;
+        this.orderList = data.reverse();
+        for (let i = 0; i < this.orderList.length; i++) {
+          this.colapse.push(true);
         }
-      }
+      },
+      (error) => console.log(error)
     )
   }
 
@@ -47,8 +43,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   showDetails(collapseable: ElementRef, i: number) {
-    this.colapse[i]=!this.colapse[i];
-    this.renderer.setElementClass(collapseable,'collapse',this.colapse[i]);
+    this.colapse[i] = !this.colapse[i];
+    this.renderer.setElementClass(collapseable, 'collapse', this.colapse[i]);
   }
 
 }

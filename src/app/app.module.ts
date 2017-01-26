@@ -28,7 +28,8 @@ import { UserService } from './user.service';
 import { FormatAddressPipe } from './format-address.pipe';
 import { OrderService } from './order.service';
 import { FooterComponent } from './footer/footer.component';
-import { PharmacyComponent } from './pharmacy/pharmacy.component';
+import { AuthGuard } from './auth-guard';
+import { PharmacyOrderComponent } from './pharmacy-order/pharmacy-order.component';
 
 @NgModule({
   declarations: [
@@ -48,8 +49,8 @@ import { PharmacyComponent } from './pharmacy/pharmacy.component';
     ShoppingCartCheckoutComponent,
     FormatAddressPipe,
     FooterComponent,
-    PharmacyComponent
-    ],
+    PharmacyOrderComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -57,7 +58,7 @@ import { PharmacyComponent } from './pharmacy/pharmacy.component';
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService],
+  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

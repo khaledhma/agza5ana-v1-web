@@ -2,8 +2,6 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { AuthenticationService } from '../../authentication.service';
-import { UserService } from '../../user.service';
-import { User } from '../../user';
 
 
 @Component({
@@ -19,24 +17,22 @@ export class SignupComponent implements OnInit {
   @Output() switchPanel = new EventEmitter<any>();
 
 
-  constructor(private authService: AuthenticationService, private userService: UserService) { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
   }
 
   signup(form: NgForm) {
-    this.showSpinner = true;;
+    this.showSpinner = true;
     let name = form.value.name;
     let email = form.value.email;
     let password = form.value.password;
-    this.authService.signupUserWithEmailAndPassword (name, email, password).then(
-      (data)=>{
-        this.authService.updateProfile(name,data).then();
+    this.authService.signupUserWithEmailAndPassword (email, password).then(
+      (user)=>{
+        this.authService.updateProfile(name,user).then();
         this.showSpinner = false;
         this.errorMessage = "";
         this.isError = false;
-        let user = new User(data.auth.displayName,data.auth.email,data.uid,undefined);
-        this.userService.createUser(user).then(()=>console.log('success'));
         this.authService.signout();
         this.switchPanel.emit();
       }

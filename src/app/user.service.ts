@@ -12,22 +12,29 @@ export class UserService {
   constructor(private af:AngularFire) { }
 
   createUser(user: User): firebase.Promise<void> {
-    let userNode = {[user['uid']]:{"email":user['email'],"mode":user['mode']}};
-    console.log(userNode);
+    let userNode = {[user['uid']]:user};
     return this.af.database.object('/users').update(userNode);
-  }
-
-  updateUserProfile(user: User): firebase.Promise<void> {
-    let userNode = {"displayName":user['displayName']};
-    return this.af.database.object('/users/'+user['uid']).update(userNode);
   }
 
   getUserProfile(uid: string): FirebaseObjectObservable<any> {
     return this.af.database.object('/users/'+uid);
   }
 
-  getUserName(uid: string): Observable<any> {
-    return this.af.database.object('/users/'+uid).take(1);
+  saveUserProfileToLocalStorage(user: User) {
+    localStorage.setItem('userProfile',JSON.stringify(user));
+  }
+
+  getUserProfileFromLocalStorage(): User {
+    try {
+      return localStorage.getItem('userProfile')?JSON.parse(localStorage.getItem('userProfile')):null;
+    } catch(error) {
+      console.log('return error: ', error);
+      return null;
+    }
+  }
+
+  removeUserProfileFromLocalStorage() {
+    localStorage.getItem('userProfile')?localStorage.removeItem('userProfile'):1;
   }
 
   addAddress(uid: string, address: Address): firebase.Promise<void> {
