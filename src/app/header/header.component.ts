@@ -1,6 +1,10 @@
 import { Component, OnInit, ElementRef, Renderer, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import { Subscription } from 'rxjs/Rx';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 import { OrderService } from '../order.service';
 import { User } from '../user';
@@ -14,14 +18,17 @@ import { UserService } from '../user.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private isOpen: boolean = false;
+  private isMenueOpen: boolean = false;
   private subscription: Subscription;
+  private urlSub: Subscription;
   private loggedin: boolean = false;
   private userName: string;
   private newOrderCount: number = 0;
   private loggedInUser: User;
   private isPharmacy: boolean = false;
+  private currentLink: string = "Home";
 
-  constructor(private renderer: Renderer, private authService: AuthenticationService, private orderService: OrderService, private userService: UserService) { }
+  constructor(private renderer: Renderer, private authService: AuthenticationService, private orderService: OrderService, private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.subscription = this.authService.isAuthenticated().subscribe(
@@ -47,30 +54,47 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       },
       (error) => console.log('errrrorrrrrrrrrr', error)
-    )
-  }
+    );
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+    this.urlSub = this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .map(() => this.activatedRoute)
+      .map(route => {
+        while (route.firstChild) route = route.firstChild;
+        return route;
+      })
+      .mergeMap(route => route.data)
+      .subscribe((event) => this.currentLink = event['title']);
 
-  toggle(elementRef: ElementRef) {
-    this.isOpen = !this.isOpen;
-    this.renderer.setElementClass(elementRef, 'open', this.isOpen);
-  }
+}
 
-  close(elementRef: ElementRef) {
-    this.renderer.setElementClass(elementRef, 'open', false);
-    this.isOpen = false;
-  }
+ngOnDestroy() {
+  this.subscription.unsubscribe();
+  this.urlSub.unsubscribe();
+}
 
-  showLogin() {
-    this.authService.showLogin(true);
-  }
+toggle(elementRef: ElementRef) {
+  this.isOpen = !this.isOpen;
+  this.renderer.setElementClass(elementRef, 'open', this.isOpen);
+}
 
-  signout() {
-    this.userService.removeUserProfileFromLocalStorage();
-    this.authService.signout();
-  }
+toggleMenue(elementRef: ElementRef) {
+  this.isMenueOpen = !this.isMenueOpen;
+  this.renderer.setElementClass(elementRef, 'open', this.isMenueOpen);
+}
+
+close(elementRef: ElementRef) {
+  this.renderer.setElementClass(elementRef, 'open', false);
+  this.isOpen = false;
+}
+
+showLogin() {
+  this.authService.showLogin(true);
+}
+
+signout() {
+  this.userService.removeUserProfileFromLocalStorage();
+  this.authService.signout();
+}
 
 }

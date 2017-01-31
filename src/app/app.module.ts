@@ -17,7 +17,7 @@ import { AuthenticationService } from './authentication.service';
 import { LoginComponent } from './authentication/login/login.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { appRoutes } from './app.routes';
-import { OrdersComponent } from './orders/orders.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { ShoppingCartWidgetComponent } from './shopping-cart/shopping-cart-widget/shopping-cart-widget.component';
 import { ShoppingListService } from './shopping-cart/shopping-list.service';
 import { ShoppingCartListComponent } from './shopping-cart/shopping-cart-list/shopping-cart-list.component';
@@ -32,6 +32,9 @@ import { AuthGuard } from './auth-guard';
 import { PharmacyOrderComponent } from './pharmacy-order/pharmacy-order.component';
 import { SellBuyComponent } from './sell-buy/sell-buy.component';
 import { SellBuyService } from './sell-buy.service';
+import { OfflineIndicatorComponent } from './offline-indicator/offline-indicator.component';
+import { MakeOrderComponent } from './make-order/make-order.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,7 @@ import { SellBuyService } from './sell-buy.service';
     AuthenticationComponent,
     LoginComponent,
     SignupComponent,
-    OrdersComponent,
+    MyOrdersComponent,
     ShoppingCartWidgetComponent,
     ShoppingCartListComponent,
     MultiplyPipe,
@@ -52,7 +55,10 @@ import { SellBuyService } from './sell-buy.service';
     FormatAddressPipe,
     FooterComponent,
     PharmacyOrderComponent,
-    SellBuyComponent
+    SellBuyComponent,
+    OfflineIndicatorComponent,
+    MakeOrderComponent,
+    ContactusComponent
   ],
   imports: [
     BrowserModule,

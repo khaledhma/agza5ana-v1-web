@@ -19,15 +19,15 @@
         </div>
       </div>
       <div class="sell-buy-row">
-        <div class="form-group">
-          <input type="file" class="form-control-file btn-solid-primary btn" id="file" aria-describedby="fileHelp" (change)="fileChange($event)">
+        <div class="sell-buy-col">
+          <div class="img-thumb">
+            <button class="btn-solid-accent btn-small delete-img-thumb" (click)="deleteImage()" *ngIf="showImage">Delete</button>
+            <img [src]="uploadedImageUrl" calss="img-fluid" *ngIf="showImage">
+          </div>
+          <div class="form-group">
+            <input type="file" class="form-control-file btn-solid-primary btn" id="file" aria-describedby="fileHelp" (change)="fileChange($event)">
+          </div>
         </div>
-        <div class="img-thumb">
-          <button class="btn-solid-accent btn-small delete-img-thumb" (click)="deleteImage()" *ngIf="showImage">Delete</button>
-          <img [src]="uploadedImageUrl" calss="img-fluid">
-        </div>
-      </div>
-      <div class="sell-buy-row">
         <span><b>Medecine Name: </b><input type="text" class="form-control" ngModel name="medecineName" required = "true"></span>
         <span><b>Price: </b><input type="text" class="form-control" ngModel name="price" required = "true" pattern="^[1-9]\d*(\.\d+)?$"></span>
         <span><b>Quantity: </b><input type="text" class="form-control" ngModel name="qty" required = "true" pattern="^[1-9]\d*(\.\d+)?$"></span>
@@ -72,10 +72,8 @@
         </div>
         <div class="sell-buy-row">
           <div class="img-thumb">
-            <img [src]="post.photoUrl?post.photoUrl:''" calss="img-fluid">
+            <img [src]="post.photoUrl?post.photoUrl:''" calss="img-fluid" *ngIf="post.photoUrl!=''?true:false">
           </div>
-        </div>
-        <div class="sell-buy-row">
           <span><b>Medecine Name: </b><input type="text" class="form-control" value = "{{ post.medecineName }}" disabled="true"></span>
           <span><b>Price: </b><input type="text" class="form-control" value = "{{ post.price }}" disabled="true"></span>
           <span><b>Quantity: </b><input type="text" class="form-control" value = "{{ post.qty }}" disabled="true"></span>

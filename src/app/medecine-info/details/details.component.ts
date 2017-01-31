@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Observable, Subscription} from 'rxjs/Rx';
+import 'rxjs/add/operator/take';
 
 import { MedecineService } from '../../medecine.service';
 import { AuthenticationService } from '../../authentication.service';
@@ -18,9 +19,8 @@ import { UserService } from '../../user.service';
 })
 export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() medecineId = 0;
+  @Input() medecineId = 1;
   private medecineDetails: any;
-  @Input() exist: boolean = false;
   private subscription: Subscription;
   private loggedin: boolean = false;
   private loggedInUser: User;
@@ -49,8 +49,15 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
         if (isLogged) {
           this.loggedInUser = this.userService.getUserProfileFromLocalStorage();
         }
-      }
-    )
+      });
+
+      this.medecineService.getMedecineDetails(1).take(1).subscribe(
+        (data) => {
+          this.medecineDetails = data[0];
+        },
+        (error) => {
+          console.error(error);
+        });
   }
 
   ngOnDestroy() {

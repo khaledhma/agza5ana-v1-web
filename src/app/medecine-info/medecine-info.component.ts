@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class MedecineInfoComponent implements OnInit {
 
   private medecineSelected: number = 0;
-  private showDetails = false;
 
 
   constructor() { }
@@ -18,7 +17,6 @@ export class MedecineInfoComponent implements OnInit {
 
   showMedecine(id){
     this.medecineSelected = id;
-    this.showDetails = true;
   }
 
 }

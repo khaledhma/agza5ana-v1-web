@@ -38,8 +38,9 @@
     </div>
   </fieldset>
 
-  <div class="form-group">
+  <div class="form-group searchtext">
     <input type="text" class="form-control medecinesearch" id="searchinput" aria-describedby="search" placeholder="{{ placeholderString }}" value="" (keyup)="search(searchinput.value)" #searchinput>
+    <i class="material-icons">search</i>
   </div>
 
   <div class="sk-fading-circle spinner" [hidden]="!showSpinner">

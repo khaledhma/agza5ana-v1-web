@@ -9,11 +9,11 @@ import { User } from '../user';
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
+  selector: 'app-my-orders',
+  templateUrl: './my-orders.component.html',
   styles: []
 })
-export class OrdersComponent implements OnInit, OnDestroy {
+export class MyOrdersComponent implements OnInit, OnDestroy {
 
   private orderList: Order[] = [];
   private colapse: boolean[] = [];
