@@ -36,6 +36,7 @@ import { OfflineIndicatorComponent } from './offline-indicator/offline-indicator
 import { MakeOrderComponent } from './make-order/make-order.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { OfflineService } from './offline.service';
+import { AdsComponent } from './ads/ads.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { OfflineService } from './offline.service';
     SellBuyComponent,
     OfflineIndicatorComponent,
     MakeOrderComponent,
-    ContactusComponent
+    ContactusComponent,
+    AdsComponent
   ],
   imports: [
     BrowserModule,

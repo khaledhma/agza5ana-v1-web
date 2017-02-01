@@ -78,6 +78,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() { }
 
-  
+
 
 }

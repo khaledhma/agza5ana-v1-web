@@ -5,15 +5,16 @@ import * as firebase from 'firebase';
 @Injectable()
 export class OfflineService {
 
-  constructor(private af: AngularFire, @Inject(FirebaseApp) private firebaseApp: firebase.app.App) { }
+  constructor(private af: AngularFire, @Inject(FirebaseApp) private firebaseApp: any) { }
 
   isOffline(): FirebaseObjectObservable<any> {
     return this.af.database.object('.info/connected');
   }
 
   saveConnection(uid: string) {
-    this.firebaseApp.database().ref('online/').update({ [uid]: true});
-    this.firebaseApp.database().ref('online/' + uid).onDisconnect().remove();
+    let connectionNumber = Math.floor((Math.random())*100);
+    this.firebaseApp.database().ref('online/' + uid).update({[connectionNumber]:true});
+    this.firebaseApp.database().ref('online/' + uid + '/' + connectionNumber).onDisconnect().remove();
   }
 
 }

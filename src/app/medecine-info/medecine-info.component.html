@@ -1,6 +1,25 @@
-<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-  <app-search (medecineSelected)="showMedecine($event)"></app-search>
+<div class="row">
+  <app-ads>
+    <h5>Order your medecine online with us...</h5>
+    <p>Your order will be directed to all Pharamcies in your area</p>
+    <button class="btn-solid-accent" [routerLink]="['makeorder']">Order Now !</button>
+  </app-ads>
+  <app-ads>
+    <h5>Use Mobile Apps...</h5>
+    <p>Have access to many useful features like BarCode Scanning</p>
+    <img src="images/google_outline.jpg" alt="" width="100px">
+    <img src="images/apple_outline.jpg" alt="" width="100px">
+  </app-ads>
 </div>
-<div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
-  <app-details [medecineId]="medecineSelected"></app-details>
+<div class="row">
+  <hr>
+</div>
+
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <app-search (medecineSelected)="showMedecine($event)"></app-search>
+  </div>
+  <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+    <app-details [medecineId]="medecineSelected"></app-details>
+  </div>
 </div>

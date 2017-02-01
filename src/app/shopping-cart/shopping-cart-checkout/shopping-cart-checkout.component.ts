@@ -114,7 +114,7 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
       (data) => {
         this.sending = false;
         this.shoppingListService.deleteList(this.loggedInUser['uid']);
-        this.router.navigate(['orders']);
+        this.router.navigate(['myorders']);
       }
     )
   }

@@ -1,43 +1,6 @@
 <div class="card search-card">
-  <fieldset class="form-group">
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="radio"
-         class="form-check-input"
-          name="optionsRadios"
-           id="optionsRadios1"
-            value="option1"
-             checked
-             (change)="selectionChanged(1,searchinput)">
-        Medecine Name
-      </label>
-    </div>
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="radio"
-         class="form-check-input"
-          name="optionsRadios"
-           id="optionsRadios2"
-            value="option2"
-            (change)="selectionChanged(2,searchinput)">
-        Barcode
-      </label>
-      <br>&nbsp;&nbsp;<span><small class="barcode-message">Mobile App Enables Camera</small></span>
-    </div>
-    <div class="form-check disabled">
-      <label class="form-check-label">
-        <input type="radio"
-         class="form-check-input"
-          name="optionsRadios"
-           id="optionsRadios3"
-            value="option3"
-            disabled
-            (change)="selectionChanged(3,searchinput)">
-        Effective Substance
-      </label>
-    </div>
-  </fieldset>
-
+  <span><small class="barcode-message">Search By Medecine Name</small></span>
+  <hr>
   <div class="form-group searchtext">
     <input type="text" class="form-control medecinesearch" id="searchinput" aria-describedby="search" placeholder="{{ placeholderString }}" value="" (keyup)="search(searchinput.value)" #searchinput>
     <i class="material-icons">search</i>

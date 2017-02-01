@@ -1,11 +1,9 @@
-  <app-header></app-header>
-  <app-offline-indicator [show]="isOffline"></app-offline-indicator>
-  <div class="container">
-    <hr>
-    <div class="row">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-  <app-footer></app-footer>
-  <app-authentication></app-authentication>
-  <app-shopping-cart-widget></app-shopping-cart-widget>
+<app-header></app-header>
+<app-offline-indicator [show]="isOffline"></app-offline-indicator>
+<div class="container">
+  <hr>
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
+<app-authentication></app-authentication>
+<app-shopping-cart-widget></app-shopping-cart-widget>
