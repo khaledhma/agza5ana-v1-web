@@ -30,6 +30,10 @@
     "sellbuy": {
       ".read": true,
       ".write": true
+    },
+    "online": {
+      ".read": true,
+      ".write": true
     }
   }
 }

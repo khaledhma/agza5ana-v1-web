@@ -35,6 +35,7 @@ import { SellBuyService } from './sell-buy.service';
 import { OfflineIndicatorComponent } from './offline-indicator/offline-indicator.component';
 import { MakeOrderComponent } from './make-order/make-order.component';
 import { ContactusComponent } from './contactus/contactus.component';
+import { OfflineService } from './offline.service';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,7 @@ import { ContactusComponent } from './contactus/contactus.component';
     RouterModule.forRoot(appRoutes),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService, AuthGuard, SellBuyService],
+  providers: [MedecineService, AuthenticationService, ShoppingListService, UserService, OrderService, AuthGuard, SellBuyService, OfflineService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
