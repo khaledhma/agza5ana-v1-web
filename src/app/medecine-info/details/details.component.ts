@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Observable, Subscription} from 'rxjs/Rx';
 import 'rxjs/add/operator/take';
 
@@ -20,6 +20,7 @@ import { UserService } from '../../user.service';
 export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() medecineId = 1;
+  @Output() goBack = new EventEmitter();
   private medecineDetails: any;
   private subscription: Subscription;
   private loggedin: boolean = false;
@@ -71,6 +72,10 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
       +1,
       "http://lorempixel.com/550/350/");
     this.shoppingListService.addItem(item, this.loggedInUser['uid']);
+  }
+
+  back() {
+    this.goBack.emit();
   }
 
 }

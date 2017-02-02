@@ -7,8 +7,8 @@
   <app-ads>
     <h5>Use Mobile Apps...</h5>
     <p>Have access to many useful features like BarCode Scanning</p>
-    <img src="images/google_icon.png" alt="" width="40px">
-    <img src="images/apple_icon.png" alt="" width="40px">
+    <img src="images/google_icon.png" class="clickable" width="40px">
+    <img src="images/apple_icon.png" class="clickable" width="40px">
   </app-ads>
 </div>
 <div class="row">
@@ -16,10 +16,10 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" [ngClass]="{'hidden-xs-down':showDetails}">
     <app-search (medecineSelected)="showMedecine($event)"></app-search>
   </div>
-  <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
-    <app-details [medecineId]="medecineSelected"></app-details>
+  <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12" [ngClass]="{'hidden-xs-down':!showDetails}">
+    <app-details [medecineId]="medecineSelected" (goBack)="showDetails=false"></app-details>
   </div>
 </div>

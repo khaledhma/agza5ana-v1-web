@@ -266,6 +266,21 @@ nav {
   display: flex;
   flex-wrap: wrap;
 
+  .goback {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: $color-accent;
+    font-size: 16px;
+    font-weight: bold;
+    i {
+      font-size: 30px;
+    }
+  }
+
   .medecine-details-image {
     position: relative;
     flex-basis: 350px;
@@ -848,6 +863,7 @@ input[type="file"] {
 }
 
 .ad-card {
+  position: relative;
   padding: 10px;
   border-radius: 5px;
   background-color: fade($color-accent, 0.5);
@@ -864,11 +880,34 @@ input[type="file"] {
     color: $color-primary;
   }
 
-  img {
+  img.clickable {
     display: inline;
     margin: 0;
     border-radius: 5px;
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.4);
     border: 2px solid $color-accent;
+  }
+
+  img.announcement {
+    position: absolute;
+    opacity: 0.1;
+    top: 0px;
+    right: 0px;
+  }
+}
+
+.contactus {
+  margin-bottom: 10px;
+  position: relative;
+
+  .list-group-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+  }
+
+  i,p,b {
+    color: $color-accent;
   }
 }
