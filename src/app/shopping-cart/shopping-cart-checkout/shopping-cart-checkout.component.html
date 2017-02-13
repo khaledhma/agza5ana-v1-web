@@ -15,13 +15,13 @@
     <div class="sk-circle12 sk-circle"></div>
   </div>
 </div>
-<div class="col-md-6">
+<div class="col-lg-12">
   <div class="card" *ngIf="shoppingList.length==0">
     <h4>No items in the shopping list.....</h4>
   </div>
   <div class="list-group card" [hidden]="shoppingList.length==0">
     <a class="list-group-item shopping-list-header">
-      <p> </p>
+      <h5>Your Order Items</h5>
       <h5><small>Total</small> {{getTotal() | number:'1.2-2'}} LE</h5>
     </a>
     <a class="list-group-item shopping-list-item" *ngFor="let item of shoppingList">
@@ -35,57 +35,16 @@
         <h5><small>Sub-Total</small> {{item.medecinePrice | multiply:item.medecineQty | number:'1.2-2'}} LE</h5>
       </div>
     </a>
-    <a class="list-group-item shopping-list-item">
-      <div class="form-group">
-        <input type="file" class="form-control-file btn-solid-primary btn" id="file" aria-describedby="fileHelp" (change)="fileChange($event)">
-        <small id="fileHelp" class="form-text text-muted">Upload any document if needed</small>
-      </div>
-      <div class="progress" *ngIf="showProgressBar">
-        <div class="progress-container">
-          <div class="progress-bar" [style.width]="progressBar+'%'">
-            <span class="progress-text">{{ progressBar | number:'1.2-2'}}&nbsp;%</span>
-          </div>
-        </div>
-      </div>
-      <div class="img-thumb" *ngIf="showImage">
-        <button class="btn-solid-accent btn-small delete-img-thumb" (click)="deleteImage()">Delete</button>
-        <img [src]="uploadedImageUrl" calss="img-fluid">
-      </div>
-    </a>
   </div>
 </div>
-<div class="col-md-6">
-  <form #f="ngForm">
-    <div class="list-group card" [hidden]="shoppingList.length==0">
-      <a class="list-group-item adress-list-header">
-        <p> </p>
-        <button class="btn-solid-accent ripple" (click)="sendOrder(f)" [disabled]="(addressSelected==addresses.length?true:false)&&(f.invalid)">Send Order</button>
-      </a>
-      <a class="list-group-item adress-list-saved" *ngFor="let address of addresses, let i=index">
-        <div class="form-check">
-          <label class="form-check-label" for="addressName">
-            <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="i"  [(ngModel)]="addressSelected">
-            <b>{{address.name}}</b>
-          </label>
-        </div>
-        <h6>{{ address | formatAddress }}</h6>
-      </a>
-      <a class="list-group-item adress-list-saved" *ngIf="isAddress">
-        <p>No Saved Adresses. Please use the form to add new address</p>
-      </a>
-      <a class="list-group-item add-new-address">
-        <div class="form-check address-name">
-          <label class="form-check-label" for="addressName">
-            <input type="radio" class="form-check-input" name="addressName" id="addressName" [value]="addresses.length" [(ngModel)]="addressSelected">
-            <input type="text" class="form-control" id="name" placeholder="Enter address name" ngModel name="name" [required] = "addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-          </label>
-        </div>
-        <input type="text" class="form-control" id="apartment" placeholder="Apartment number" ngModel name="apartment" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-        <input type="text" class="form-control" id="building" placeholder="Building number" ngModel name="building" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-        <input type="text" class="form-control" id="street" placeholder="Street name" ngModel name="street" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-        <input type="text" class="form-control" id="area" placeholder="Area" ngModel name="area" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-        <input type="text" class="form-control" id="city" placeholder="City" ngModel name="city" [required]="addressSelected==addresses.length?true:false" [disabled]="!(addressSelected==addresses.length?true:false)">
-      </a>
-    </div>
-  </form>
+<div class="container">
+  <div class="col-lg-12">
+    <hr>
+  </div>
+</div>
+<app-address [uid]="loggedInUser['uid']" (selectedAddressEmitter)="selectedAddress($event)"></app-address>
+<div class="container">
+  <div class="col-lg-12 card send-order">
+    <button class="btn-solid-accent ripple" (click)="sendOrder()" [disabled]="disbaleSend">Send Order</button>
+  </div>
 </div>

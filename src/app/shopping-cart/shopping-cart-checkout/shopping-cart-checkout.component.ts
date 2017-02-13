@@ -22,20 +22,13 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
 
   private shoppingList: ShoppingItem[] = [];
   private user: any;
-  private addressSelected: number = 0;
+  private addressSelected: Address;
   private userInfo: User;
-  private isAddress: boolean = true;
-  private addresses: Address[] = [];
-  private addressesKeys: string[];
   private sending: boolean = false;
   private userProfileSubscription: Subscription;
-  private progressBar: number = 0;
-  private showProgressBar: boolean = false;
-  private uploadedImageUrl: string = "";
-  private uploadedImageFullPath: string = "";
-  private showImage: boolean = false;
-  private inputField: any;
   private loggedInUser: User;
+  private uploadedImageUrl: string = "";
+  private disbaleSend = false;
 
 
   constructor(private router: Router,
@@ -63,20 +56,8 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
           userData.$key,
           userData.mode,
           null,
-          userData.addresses ? userData.addresses : null
+          null
         );
-        if (userData.addresses) {
-          this.addresses = Object.keys(userData.addresses).map(key => userData.addresses[key]);
-          this.addressesKeys = Object.keys(userData.addresses);
-          if (this.addresses.length > 0) {
-            this.isAddress = false;
-          } else {
-            this.isAddress = true;
-          }
-        } else {
-          this.isAddress = true;
-          this.addresses = [];
-        }
       },
       (error) => {
         console.log(error)
@@ -92,97 +73,27 @@ export class ShoppingCartCheckoutComponent implements OnInit, OnDestroy {
     return total;
   }
 
-  saveAddress(f: NgForm) {
-    let formValue = f['value'];
-    if (formValue.hasOwnProperty('addressName')) {
-      formValue['addressName'] = null;
-    }
-    this.userService.addAddress(this.userInfo['uid'], Object.assign(formValue, { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
-      (data) => {
-        f.reset();
-      }
-    )
-  }
-
-  sendOrder(f: NgForm) {
+  sendOrder() {
     this.sending = true;
-    if (this.addressSelected == this.addresses.length) {
-      this.saveAddress(f);
-    }
-    let order = new Order(this.loggedInUser['uid'], this.addresses[this.addressSelected], new Date().getTime(), undefined, undefined, undefined, this.shoppingList, this.getTotal(), this.uploadedImageUrl);
+    let order = new Order(this.loggedInUser['uid'], this.addressSelected, new Date().getTime(), undefined, undefined, undefined, this.shoppingList, this.getTotal(), this.uploadedImageUrl);
+    console.log(order);
     this.orderService.sendOrder(order).then(
       (data) => {
         this.sending = false;
         this.shoppingListService.deleteList(this.loggedInUser['uid']);
         this.router.navigate(['myorders']);
-      }
+      },
+      (error) => console.log
     )
   }
 
-  fileChange(event) {
-    this.inputField = event;
-    let fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      this.showProgressBar = true;
-      let emitProgress = new EventEmitter<number>();
-      let emitImageData = new EventEmitter<[string]>();
-      let subscriber = emitProgress.subscribe((value) => this.progressBar = value);
-      let imageSubscriber = emitImageData.subscribe(
-        (value) => {
-          this.uploadedImageUrl = value[0];
-          this.uploadedImageFullPath = value[1];
-          this.showImage = true;
-          this.showProgressBar = false;
-        }
-      );
-      let file: File = fileList[0];
-      let uploadTask = this.orderService.uploadImage(file.name, file);
-      // Listen for state changes, errors, and completion of the upload.
-      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-        function(snapshot) {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          emitProgress.emit(progress);
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-              console.log('Upload is paused');
-              break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-              console.log('Upload is running');
-              break;
-          }
-        }, function(error) {
-          switch (error['code']) {
-            case 'storage/unauthorized':
-              // User doesn't have permission to access the object
-              break;
-
-            case 'storage/canceled':
-              // User canceled the upload
-              break;
-
-
-            case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-          }
-        }, function() {
-          // Upload completed successfully, now we can get the download URL
-          console.log(uploadTask.snapshot.ref.fullPath);
-          emitImageData.emit([uploadTask.snapshot.downloadURL, uploadTask.snapshot.ref.fullPath]);
-        });
+  selectedAddress(address: Address) {
+    console.log(address);
+    if(address === null) {
+      this.disbaleSend = true;
+    } else {
+      this.disbaleSend = false;
     }
+    this.addressSelected = address;
   }
-
-  deleteImage() {
-    this.orderService.deleteImage(this.uploadedImageFullPath).then(
-      () => {
-        this.showImage = false;
-        this.uploadedImageUrl = "";
-        this.inputField.srcElement.value = '';
-      }
-    ).catch(console.error);
-  }
-
 }

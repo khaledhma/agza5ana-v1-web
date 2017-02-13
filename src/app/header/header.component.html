@@ -22,9 +22,9 @@
 </nav>
 <nav class="navbar navbar-dark bg-inverse secondary mytogglablemenu" #menu>
   <div class="navbar-nav column-layout">
-    <a class="nav-item nav-link" [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenue(menu)">Home</a>
-    <a class="nav-item nav-link" [routerLink]="['sell-buy']" routerLinkActive="active" (click)="toggleMenue(menu)">Sell/Buy</a>
-    <a class="nav-item nav-link" [routerLink]="['makeorder']" routerLinkActive="active" (click)="toggleMenue(menu)">Order Your Medecine</a>
-    <a class="nav-item nav-link" [routerLink]="['contactus']" routerLinkActive="active" (click)="toggleMenue(menu)">Contact Us</a>
+    <a class="nav-item nav-link" [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenue(menu)">{{ 'home' | translate }}</a>
+    <a class="nav-item nav-link" [routerLink]="['sell-buy']" routerLinkActive="active" (click)="toggleMenue(menu)">{{ 'sellbuy' | translate }}</a>
+    <a class="nav-item nav-link" [routerLink]="['makeorder']" routerLinkActive="active" (click)="toggleMenue(menu)">{{ 'makeorder' | translate }}</a>
+    <a class="nav-item nav-link" [routerLink]="['contactus']" routerLinkActive="active" (click)="toggleMenue(menu)">{{ 'contactus' | translate }}</a>
   </div>
 </nav>

@@ -18,9 +18,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   private loggedInUser: User;
   private userInfo: User;
-  private isAddress: boolean = true;
-  private addresses: Address[];
-  private addressesKeys: string[];
   private loading: boolean = true;
   private userProfileSubscription: Subscription;
 
@@ -47,40 +44,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           userData.$key,
           userData.mode,
           null,
-          userData.addresses ? userData.addresses : null
+          null
         );
-        if (userData.addresses) {
-          this.addresses = Object.keys(userData.addresses).map(key=>userData.addresses[key]);
-          this.addressesKeys = Object.keys(userData.addresses);
-          if (this.addresses.length > 0) {
-            this.isAddress = false;
-          } else {
-            this.isAddress = true;
-          }
-        } else {
-          this.isAddress = true;
-          this.addresses = [];
-        }
       },
       (error) => {
         console.log(error)
       }
     );
-  }
-
-  saveAddress(f: NgForm) {
-    this.userService.addAddress(this.userInfo['uid'], Object.assign(f['value'], { 'coordinates': { 'lang': 'lang', 'lat': 'lat' } })).then(
-      (data) => {
-        f.reset();
-      }
-    )
-  }
-
-  deleteAddress(i:number) {
-    this.userService.deleteAddress(this.userInfo['uid'], this.addressesKeys[i]).then(
-      (data)=> { console.log }
-    )
-
   }
 
 }

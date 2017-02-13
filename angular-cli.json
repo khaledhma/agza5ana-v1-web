@@ -9,7 +9,8 @@
       "outDir": "public",
       "assets": [
         "images",
-        "favicon"
+        "favicon",
+        "i18n"
       ],
       "index": "index.html",
       "main": "main.ts",
