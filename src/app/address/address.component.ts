@@ -29,7 +29,7 @@ export class AddressComponent implements OnInit, OnDestroy {
   @ViewChild('newAddressForm')
   set content(content: NgForm) {
     this.newAddressForm = content;
- }
+  }
   private isAddAddress: boolean = false;
   private openInfoWindow: boolean = false;
 
@@ -70,27 +70,19 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   addNewAddress() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.getAddressFromCoords();
-        this.isAddAddress = true;
-        this.openInfoWindow = true;
-      });
-    }
+    this.isAddAddress = true;
   }
 
   saveAddress() {
     this.addressService.addAddress(this.uid,
-       Object.assign(this.newAddressForm['value'],
+      Object.assign(this.newAddressForm['value'],
         { 'coordinates': { 'lang': this.lng, 'lat': this.lat } })).then(
       () => {
         this.newAddressForm.reset();
         this.selectAddress(this.addresses.length - 1);
         this.isAddAddress = false;
       }
-    )
+      )
   }
 
   deleteAddress(i: number) {
@@ -98,16 +90,16 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   selectAddress(i: number) {
-    if(i>=0) {
+    if (i >= 0) {
       let addressToEmit = this.addresses[i];
       let address = new Address(
-         addressToEmit['name'] ,
-         addressToEmit['apartment'] ,
-         addressToEmit['building'] ,
-         addressToEmit['street'] ,
-         addressToEmit['area'] ,
-         addressToEmit['city'] ,
-         addressToEmit['coordinates']
+        addressToEmit['name'],
+        addressToEmit['apartment'],
+        addressToEmit['building'],
+        addressToEmit['street'],
+        addressToEmit['area'],
+        addressToEmit['city'],
+        addressToEmit['coordinates']
       )
       this.selectedAddress = i;
       this.selectedAddressEmitter.emit(address);
@@ -118,9 +110,12 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   findCurrentLocation() {
+    let ua = navigator.userAgent.toLowerCase();
+    let isAndroid = ua.indexOf("android") > -1;
+    let geoTimeout = isAndroid ? 60000 : 1000;
     this.mapLoading = true;
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation.watchPosition((position) => {
         this.mapLoading = false;
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
@@ -132,7 +127,11 @@ export class AddressComponent implements OnInit, OnDestroy {
           this.lat = 30.0738672;
           this.lng = 31.3200421;
           this.openInfoWindow = true;
-        });
+          alert(error.message);
+        },
+        { enableHighAccuracy: false, maximumAge: Infinity, timeout: geoTimeout });
+    } else {
+      alert('Error: Unable to determine your position!');
     }
   }
 
